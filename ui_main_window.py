@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Tue Jun 29 23:08:02 2010
+# Created: Thu Jul  1 15:53:38 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,15 +15,15 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.widget = QtGui.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(9, 3, 801, 541))
-        self.widget.setObjectName("widget")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget = QtGui.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(9, 3, 801, 541))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.listWidget = QtGui.QListWidget(self.widget)
-        self.listWidget.setObjectName("listWidget")
-        self.horizontalLayout.addWidget(self.listWidget)
-        self.textBrowser = QtGui.QTextBrowser(self.widget)
+        self.wordListView = QtGui.QListView(self.layoutWidget)
+        self.wordListView.setObjectName("wordListView")
+        self.horizontalLayout.addWidget(self.wordListView)
+        self.textBrowser = QtGui.QTextBrowser(self.layoutWidget)
         self.textBrowser.setObjectName("textBrowser")
         self.horizontalLayout.addWidget(self.textBrowser)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -36,9 +36,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.actionAdd_text = QtGui.QAction(MainWindow)
-        self.actionAdd_text.setObjectName("actionAdd_text")
-        self.menuFile.addAction(self.actionAdd_text)
+        self.actionImport = QtGui.QAction(MainWindow)
+        self.actionImport.setObjectName("actionImport")
+        self.menuFile.addAction(self.actionImport)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -47,5 +47,5 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAdd_text.setText(QtGui.QApplication.translate("MainWindow", "Add text", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionImport.setText(QtGui.QApplication.translate("MainWindow", "Import", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>9</x>
@@ -25,7 +25,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListView" name="wordListView"/>
      </item>
      <item>
       <widget class="QTextBrowser" name="textBrowser"/>
@@ -46,14 +46,14 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionAdd_text"/>
+    <addaction name="actionImport"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAdd_text">
+  <action name="actionImport">
    <property name="text">
-    <string>Add text</string>
+    <string>Import</string>
    </property>
   </action>
  </widget>
