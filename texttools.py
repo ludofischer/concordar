@@ -3,6 +3,7 @@
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QSettings
 from PyQt4.QtSql import QSqlTableModel
+import parsing
 import ui_main_window
 from index_database import create_database, create_table, insert_word
 
@@ -21,10 +22,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         concordanceModel.select()
         self.setupUi(self)
         self.wordListView.setModel(concordanceModel);
+        self.parser = parsing.Parser()
         
     def choose_file(self):
-        import parsing
-        self.parser = parsing.Parser()
         self.parser.file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
 
     def parse(self):
