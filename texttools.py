@@ -17,23 +17,21 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
             create_table(concordance_db)
             insert_word(concordance_db, 'pane', 'pane e vino', 'marcellino')
             settings.setValue('run_before', 1)
-        concordanceModel =  QSqlTableModel()
-        concordanceModel.setTable('words_locations')
-        concordanceModel.select()
+        self.concordanceModel =  QSqlTableModel()
+        self.concordanceModel.setTable('words_locations')
+        self.concordanceModel.select()
         self.setupUi(self)
-        self.wordListView.setModel(concordanceModel);
+        self.wordListView.setModel(self.concordanceModel);
         self.parser = parsing.Parser()
-        
+        self.actionImport.triggered.connect(self.choose_file)
+
     def choose_file(self):
-        self.parser.file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
+        text = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
+        self.import_file(text)
 
-    def parse(self):
+    def write_to_storage(self, parsed):
         pass
 
-    def write_to_storage(self):
-        pass
-
-    def import_file(self):
-        self.choose_file()
-        self.parse()
-        self.write_to_storage()
+    def import_file(self, text):
+        parsed_stuff = self.parser.parse(text)
+        self.write_to_storage(parsed_stuff)

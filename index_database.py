@@ -5,6 +5,8 @@ from PyQt4.QtSql import *
 """
 This has to be updated to use a QSqlTableModel, to be able to pass it to a QListView'
 """
+class DatabaseConnection(object):
+    pass
 
 def create_database():
     db = QSqlDatabase.addDatabase('QSQLITE')
