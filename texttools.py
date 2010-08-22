@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
+import io
+
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QSettings
 from PyQt4.QtSql import QSqlTableModel
-import parsing
+import concordance
 import ui_main_window
 from index_database import create_database, create_table, insert_word
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
         super(TextTools, self).__init__(parent)
-        concordance_db = create_database()
+        self.concordance_db = create_database()
         settings = QSettings('Ludovico', 'Indexer')
         already_run = settings.value('run_before', 0)
         if not already_run:
@@ -22,16 +26,18 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.concordanceModel.select()
         self.setupUi(self)
         self.wordListView.setModel(self.concordanceModel);
-        self.parser = parsing.Parser()
         self.actionImport.triggered.connect(self.choose_file)
 
     def choose_file(self):
-        text = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
-        self.import_file(text)
+        text_file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
+        self.import_file(text_file)
 
     def write_to_storage(self, parsed):
-        pass
+        for word, context in parsed.items():
+            insert_word(self.concordance_db, word, context, 'default')
 
-    def import_file(self, text):
-        parsed_stuff = self.parser.parse(text)
+    def import_file(self, text_file):
+        with io.open(text_file, 'r') as f:
+            text = f.read()
+        parsed_stuff = concordance.parse(text)
         self.write_to_storage(parsed_stuff)

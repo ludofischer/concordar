@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 import sys
 from PyQt4.QtSql import *
 
