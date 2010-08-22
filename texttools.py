@@ -18,8 +18,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         settings = QSettings('Ludovico', 'Indexer')
         already_run = settings.value('run_before', 0)
         if not already_run:
-            create_table(concordance_db)
-            insert_word(concordance_db, 'pane', 'pane e vino', 'marcellino')
+            create_table(self.concordance_db)
+            insert_word(self.concordance_db, 'pane', 'pane e vino', 'marcellino')
             settings.setValue('run_before', 1)
         self.concordanceModel =  QSqlTableModel()
         self.concordanceModel.setTable('words_locations')
@@ -33,7 +33,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.import_file(text_file)
 
     def write_to_storage(self, parsed):
-        for word, context in parsed.items():
+        for word, context in parsed:
             insert_word(self.concordance_db, word, context, 'default')
 
     def import_file(self, text_file):

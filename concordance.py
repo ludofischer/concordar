@@ -21,11 +21,11 @@ def make_groups(list, size):
 
 def words_with_context(words):
     """
+    >>> words = 
     """
-    word_index = {}
     for group in make_groups(words, 5):
-        word_index[group[2]] = ' '.join(group)
-    return word_index
+        yield (group[2], ' '.join(group),)
+  
 
 
 def parse(text):
