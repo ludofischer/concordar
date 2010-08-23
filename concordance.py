@@ -21,7 +21,9 @@ def make_groups(list, size):
 
 def words_with_context(words):
     """
-    >>> words = 
+    >>> words = ('cane', 'gatto', 'olio', 'corda', 'tavolo', 'orto')
+    >>> words_with_context(words).next()
+    ('olio', u'cane gatto olio corda tavolo')
     """
     for group in make_groups(words, 5):
         yield (group[2], ' '.join(group),)
