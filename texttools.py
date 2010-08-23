@@ -33,8 +33,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.import_file(text_file)
 
     def write_to_storage(self, parsed):
-        for word, context in parsed:
-            insert_word(self.concordance_db, word, context, 'default')
+        insert_word(self.concordance_db, parsed, 'default')
 
     def import_file(self, text_file):
         with io.open(text_file, 'r') as f:
