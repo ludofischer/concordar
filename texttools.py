@@ -16,10 +16,10 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         super(TextTools, self).__init__(parent)
         self.concordance_db = create_database()
         settings = QSettings('Ludovico', 'Indexer')
-        already_run = settings.value('run_before', 0)
+        already_run = int(settings.value('run_before', 0))
         if not already_run:
             create_table(self.concordance_db)
-            insert_word(self.concordance_db, 'pane', 'pane e vino', 'marcellino')
+            insert_word(self.concordance_db, (('pane','pane e vino'),), 'marcellino')
             settings.setValue('run_before', 1)
         self.concordanceModel =  QSqlTableModel()
         self.concordanceModel.setTable('words_locations')
