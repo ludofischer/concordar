@@ -19,6 +19,7 @@ def create_table(db):
         query.exec_('CREATE TABLE words_locations(word TEXT, context TEXT, book_name TEXT)')
 
 def insert_word(db, pairs, book_name='default'):
+    db.transaction()
     query = QSqlQuery(db)
     query.prepare('INSERT INTO words_locations (word, context, book_name) VALUES (?, ?, ?)')
 
@@ -28,6 +29,7 @@ def insert_word(db, pairs, book_name='default'):
         query.addBindValue(book_name)
         
         query.exec_()
+    db.commit()
 
 def retrieve_contexts(db, word):
     query = QSqlQuery(db)
