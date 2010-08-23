@@ -40,3 +40,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
             text = f.read()
         parsed_stuff = concordance.parse(text)
         self.write_to_storage(parsed_stuff)
+        self.concordanceModel.select()
+        self.textBrowser.setText(text)
