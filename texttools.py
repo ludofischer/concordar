@@ -9,7 +9,7 @@ from PyQt4.QtCore import QSettings
 from PyQt4.QtSql import QSqlTableModel
 import concordance
 import ui_main_window
-from index_database import create_database, create_table, insert_word
+from index_database import create_database, create_table, insert_word, retrieve_contexts
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -27,6 +27,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.setupUi(self)
         self.wordListView.setModel(self.concordanceModel);
         self.actionImport.triggered.connect(self.choose_file)
+        self.wordListView.clicked.connect(self.show_word_context)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
@@ -42,3 +43,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.write_to_storage(parsed_stuff)
         self.concordanceModel.select()
         self.textBrowser.setText(text)
+
+    def show_word_context(self, model_index):
+        record = self.concordanceModel.record(model_index.row())
+        retrieve_contexts(self.concordance_db, record.value(0))
+        
+
