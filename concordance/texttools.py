@@ -46,6 +46,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def show_word_context(self, model_index):
         record = self.concordanceModel.record(model_index.row())
-        retrieve_contexts(self.concordance_db, record.value(0))
+        text = '\n'.join(retrieve_contexts(self.concordance_db, record.value(0)))
+        self.textBrowser.setText(text)
+            
         
 

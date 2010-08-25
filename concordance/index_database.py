@@ -39,8 +39,6 @@ def retrieve_contexts(db, word):
     
     query.exec_()
     
-    result_set = []
-
     while query.next():
-        pass
+        yield query.value(0)
     
