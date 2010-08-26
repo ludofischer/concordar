@@ -19,8 +19,8 @@
 
 
 from __future__ import unicode_literals
-
-from itertools import izip as zip, islice
+from future_builtins import zip
+from itertools islice
 import io
 
 def make_groups(list, size):
