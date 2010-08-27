@@ -17,11 +17,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Concordance.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import unicode_literals
 import sip
 sip.setapi('QVariant', 2)
 sip.setapi('QString', 2)
 
-from __future__ import unicode_literals
+
 import sys
 from PyQt4 import QtGui
 from texttools import TextTools

@@ -20,7 +20,7 @@
 
 from __future__ import unicode_literals
 from future_builtins import zip
-from itertools islice
+from itertools import islice
 import io
 
 def make_groups(list, size):
