@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Fri Aug 27 13:41:59 2010
+# Created: Fri Aug 27 14:42:36 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,23 +12,23 @@ from PyQt4 import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(723, 596)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.layoutWidget = QtGui.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(9, 3, 801, 541))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout = QtGui.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.wordListView = QtGui.QListView(self.layoutWidget)
-        self.wordListView.setObjectName("wordListView")
-        self.horizontalLayout.addWidget(self.wordListView)
-        self.textBrowser = QtGui.QPlainTextEdit(self.layoutWidget)
+        self.textBrowser = QtGui.QPlainTextEdit(self.centralwidget)
+        self.textBrowser.setReadOnly(True)
+        self.textBrowser.setPlainText("None")
         self.textBrowser.setObjectName("textBrowser")
         self.horizontalLayout.addWidget(self.textBrowser)
+        self.wordListView = QtGui.QListView(self.centralwidget)
+        self.wordListView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.wordListView.setObjectName("wordListView")
+        self.horizontalLayout.addWidget(self.wordListView)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 723, 25))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
