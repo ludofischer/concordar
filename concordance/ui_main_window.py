@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Thu Jul  1 15:53:38 2010
+# Created: Fri Aug 27 13:41:59 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
         self.wordListView = QtGui.QListView(self.layoutWidget)
         self.wordListView.setObjectName("wordListView")
         self.horizontalLayout.addWidget(self.wordListView)
-        self.textBrowser = QtGui.QTextBrowser(self.layoutWidget)
+        self.textBrowser = QtGui.QPlainTextEdit(self.layoutWidget)
         self.textBrowser.setObjectName("textBrowser")
         self.horizontalLayout.addWidget(self.textBrowser)
         MainWindow.setCentralWidget(self.centralwidget)

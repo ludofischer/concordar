@@ -28,7 +28,7 @@
       <widget class="QListView" name="wordListView"/>
      </item>
      <item>
-      <widget class="QTextBrowser" name="textBrowser"/>
+      <widget class="QPlainTextEdit" name="textBrowser"/>
      </item>
     </layout>
    </widget>

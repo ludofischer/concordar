@@ -51,6 +51,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.import_file(text_file)
 
     def write_to_storage(self, parsed):
+        print "Saving"
         insert_word(self.concordance_db, parsed, 'default')
 
     def import_file(self, text_file):
@@ -59,12 +60,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         parsed_stuff = concordance.parse(text)
         self.write_to_storage(parsed_stuff)
         self.concordanceModel.select()
-        self.textBrowser.setText(text)
+        self.textBrowser.setPlainText(text)
 
     def show_word_context(self, model_index):
         record = self.concordanceModel.record(model_index.row())
         text = '\n'.join(retrieve_contexts(self.concordance_db, record.value(0)))
-        self.textBrowser.setText(text)
+        self.textBrowser.setPlainText(text)
             
         
 
