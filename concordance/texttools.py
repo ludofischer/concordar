@@ -42,15 +42,15 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read()
+        
         self.textBrowser.setPlainText(text)
 
-    def show_word_context(self):
+    def show_word_context(self, radius=2):
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         word = current_cursor.selectedText()
-
         self.matchesView.clear()
-        for match in concordance.search(self.textBrowser.toPlainText(), word):
+        for match in concordance.search(self.textBrowser.toPlainText(), word, radius):
             self.matchesView.addItem(match)
           
         
