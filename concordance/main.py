@@ -30,5 +30,6 @@ from texttools import TextTools
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     text_tools = TextTools()
+    text_tools.actionQuit.triggered.connect(app.quit)
     text_tools.show()
     app.exec_() 
