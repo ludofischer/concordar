@@ -19,12 +19,8 @@
 
 from __future__ import unicode_literals
 
-import io
-
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import QSettings
-from PyQt4.QtSql import QSqlTableModel
-import concordance
+
 import ui_main_window
 
 
@@ -47,6 +43,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setPlainText(text)
 
     def show_word_context(self, radius=2):
+        import concordance
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         word = current_cursor.selectedText()
