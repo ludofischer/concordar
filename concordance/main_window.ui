@@ -26,7 +26,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QListView" name="wordListView">
+     <widget class="QListWidget" name="matchesView">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>

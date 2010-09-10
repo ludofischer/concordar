@@ -50,3 +50,8 @@ def words_with_context(words):
 
 def parse(text):
     return words_with_context(text.split())
+
+def search(text, word):
+    for group in parse(text):
+        if group[0] == word:
+            yield group[1]
