@@ -31,7 +31,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionImport.triggered.connect(self.choose_file)
         self.textBrowser.cursorPositionChanged.connect(self.show_word_context)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
-
+        self.searchField = QtGui.QLineEdit('')
+        self.toolBar.addWidget(self.searchField)
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
         self.import_file(text_file)
