@@ -99,7 +99,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionFInd"/>
+   <addaction name="actionFind"/>
   </widget>
   <action name="actionImport">
    <property name="text">
@@ -114,9 +114,9 @@
     <enum>QAction::QuitRole</enum>
    </property>
   </action>
-  <action name="actionFInd">
+  <action name="actionFind">
    <property name="text">
-    <string>FInd</string>
+    <string>Find</string>
    </property>
   </action>
  </widget>

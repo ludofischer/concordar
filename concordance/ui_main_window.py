@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Tue Sep 14 00:58:57 2010
+# Created: Tue Sep 14 21:24:26 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -58,12 +58,12 @@ class Ui_MainWindow(object):
         self.actionQuit = QtGui.QAction(MainWindow)
         self.actionQuit.setMenuRole(QtGui.QAction.QuitRole)
         self.actionQuit.setObjectName("actionQuit")
-        self.actionFInd = QtGui.QAction(MainWindow)
-        self.actionFInd.setObjectName("actionFInd")
+        self.actionFind = QtGui.QAction(MainWindow)
+        self.actionFind.setObjectName("actionFind")
         self.menuFile.addAction(self.actionImport)
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
-        self.toolBar.addAction(self.actionFInd)
+        self.toolBar.addAction(self.actionFind)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -74,5 +74,5 @@ class Ui_MainWindow(object):
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionImport.setText(QtGui.QApplication.translate("MainWindow", "Import", None, QtGui.QApplication.UnicodeUTF8))
         self.actionQuit.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionFInd.setText(QtGui.QApplication.translate("MainWindow", "FInd", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionFind.setText(QtGui.QApplication.translate("MainWindow", "Find", None, QtGui.QApplication.UnicodeUTF8))
 
