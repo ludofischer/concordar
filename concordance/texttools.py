@@ -42,8 +42,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read()
-        
-        self.textBrowser.setPlainText(text)
+        self.textBrowser.setPlainText(text.decode('utf-8'))
 
     def show_word_context(self, word, radius=2):
         import concordance
