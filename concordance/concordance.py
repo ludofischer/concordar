@@ -21,9 +21,8 @@
 from __future__ import unicode_literals
 
 
-def make_groups(list, size):
-    from future_builtins import zip
-    from itertools import islice
+def make_groups(listing, size):
+    from itertools import islice, izip_longest
     """
     >>> numbers = (1,2,3,4)
     >>> g = make_groups(numbers, 1)
@@ -32,9 +31,11 @@ def make_groups(list, size):
     >>> g.next()
     (2, 3, 4)
     """
-    
-    phased_iterators = [ islice(list, start, None) for start in range(size*2 + 1) ]
-    return zip(*phased_iterators)
+    padded = ['' for i in range(size)]
+    padded.extend(listing)
+   
+    phased_iterators = [ islice(padded, start, None) for start in range(size*2 + 1) ]
+    return izip_longest(*phased_iterators, fillvalue='')
 
 
 def words_with_context(words):
