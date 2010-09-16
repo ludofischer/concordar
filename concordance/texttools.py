@@ -29,6 +29,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         super(TextTools, self).__init__(parent)
         self.setupUi(self)
         self.actionImport.triggered.connect(self.choose_file)
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.radiusBox = QtGui.QSpinBox()
