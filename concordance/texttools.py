@@ -35,11 +35,11 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.radiusBox.valueChanged.connect(self.update_from_text)
-        self.toolBar.addWidget(QtGui.QLabel('Context size'))
+        self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size')))
         self.toolBar.addWidget(self.radiusBox)
        
     def choose_file(self):
-        text_file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
+        text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
         self.import_file(text_file)
 
     def import_file(self, text_file):
