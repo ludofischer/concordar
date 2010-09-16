@@ -58,7 +58,7 @@ def search(text, word, size):
     >>> result.next()
     u'rape non ci sono alberi'
     """
-    for group in make_groups(text.split(), size):
-        if group[size] == word:
-            yield ' '.join(group)
+    from itertools import ifilter
+    return ifilter(lambda x: x[size] == word, make_groups(text.split(), size))
+
     

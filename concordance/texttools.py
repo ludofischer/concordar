@@ -52,7 +52,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.matchesView.clear()
         radius = self.radiusBox.value()
         for match in concordance.search(self.textBrowser.toPlainText(), word, radius):
-            self.matchesView.addItem(match)
+            self.matchesView.addItem(' '.join(match))
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
