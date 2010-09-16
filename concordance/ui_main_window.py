@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Thu Sep 16 16:57:45 2010
+# Created: Thu Sep 16 17:19:55 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -62,7 +62,6 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionImport)
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
-        self.toolBar.addAction(self.actionFind)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

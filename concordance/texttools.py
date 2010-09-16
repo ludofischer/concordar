@@ -31,10 +31,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionImport.triggered.connect(self.choose_file)
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
-        self.searchField = QtGui.QLineEdit('')
-        self.toolBar.addWidget(self.searchField)
-        self.actionFind.triggered.connect(self.find_word)
-
+        self.radiusBox = QtGui.QSpinBox()
+        self.radiusBox.setMinimum(1)
+        self.radiusBox.valueChanged.connect(self.update_from_text)
+        self.toolBar.addWidget(QtGui.QLabel('Context size'))
+        self.toolBar.addWidget(self.radiusBox)
+       
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, 'Choose file to import', '', '')
         self.import_file(text_file)
@@ -47,6 +49,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def show_word_context(self, word, radius=2):
         import concordance
         self.matchesView.clear()
+        radius = self.radiusBox.value()
         for match in concordance.search(self.textBrowser.toPlainText(), word, radius):
             self.matchesView.addItem(match)
 
@@ -57,6 +60,4 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.show_word_context(word)
           
         
-    def find_word(self):
-        self.show_word_context(self.searchField.text())
         
