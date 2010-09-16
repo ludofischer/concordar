@@ -60,5 +60,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         word = current_cursor.selectedText()
         self.show_word_context(word)
           
-        
-        
+        extra_selection = QtGui.QTextEdit.ExtraSelection()
+        selected_format = QtGui.QTextCharFormat()
+        selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
+        extra_selection.format = selected_format
+        extra_selection.cursor = current_cursor
+        self.textBrowser.setExtraSelections((extra_selection,))
