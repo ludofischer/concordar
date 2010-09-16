@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>723</width>
-    <height>596</height>
+    <width>740</width>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,54 +18,36 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>6</number>
-    </property>
-    <property name="leftMargin">
-     <number>3</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>3</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
-     <widget class="QPlainTextEdit" name="textBrowser">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>4</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="plainText">
-       <string notr="true">Select File &gt; Import to choose the text you want to study.</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QListWidget" name="matchesView">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>3</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>400</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
-      </property>
+      <widget class="QPlainTextEdit" name="textBrowser">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="plainText">
+        <string notr="true">Select File &gt; Import to choose the text you want to study.</string>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="matchesView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -75,7 +57,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>723</width>
+     <width>740</width>
      <height>25</height>
     </rect>
    </property>

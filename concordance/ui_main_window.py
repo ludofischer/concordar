@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created: Tue Sep 14 21:24:26 2010
+# Created: Thu Sep 16 16:57:45 2010
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,37 +12,36 @@ from PyQt4 import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(723, 596)
+        MainWindow.resize(740, 517)
         MainWindow.setUnifiedTitleAndToolBarOnMac(True)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtGui.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setSpacing(6)
-        self.horizontalLayout.setContentsMargins(3, 0, 3, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.textBrowser = QtGui.QPlainTextEdit(self.centralwidget)
+        self.splitter = QtGui.QSplitter(self.centralwidget)
+        self.splitter.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter.setObjectName("splitter")
+        self.textBrowser = QtGui.QPlainTextEdit(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(4)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
         self.textBrowser.setSizePolicy(sizePolicy)
         self.textBrowser.setReadOnly(True)
         self.textBrowser.setPlainText("Select File > Import to choose the text you want to study.")
         self.textBrowser.setObjectName("textBrowser")
-        self.horizontalLayout.addWidget(self.textBrowser)
-        self.matchesView = QtGui.QListWidget(self.centralwidget)
+        self.matchesView = QtGui.QListWidget(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(3)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.matchesView.sizePolicy().hasHeightForWidth())
         self.matchesView.setSizePolicy(sizePolicy)
-        self.matchesView.setMaximumSize(QtCore.QSize(400, 16777215))
         self.matchesView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.matchesView.setObjectName("matchesView")
-        self.horizontalLayout.addWidget(self.matchesView)
+        self.horizontalLayout.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 723, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 740, 25))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
