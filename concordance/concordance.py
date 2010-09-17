@@ -58,7 +58,9 @@ def search(text, word, size):
     >>> result.next()
     u'rape non ci sono alberi'
     """
+    def contains(group):
+        return group[size] == word
     from itertools import ifilter
-    return ifilter(lambda x: x[size] == word, make_groups(text.split(), size))
+    return ifilter(contains, make_groups(text.split(), size))
 
     
