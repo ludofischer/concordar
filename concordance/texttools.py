@@ -28,15 +28,24 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
         super(TextTools, self).__init__(parent)
         self.setupUi(self)
-        self.actionImport.triggered.connect(self.choose_file)
-        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
-        self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
+
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
-        self.radiusBox.valueChanged.connect(self.update_from_text)
-        self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size')))
+        self.wordField = QtGui.QLineEdit()
+        self.wordField.setMaximumWidth(200)
+        self.toolBar.addWidget(QtGui.QLabel(self.tr('Word to look for:')))
+        self.toolBar.addWidget(self.wordField)
+        spacer = QtGui.QWidget(self)
+        spacer.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        self.toolBar.addWidget(spacer)
+        self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
+
+        self.actionImport.triggered.connect(self.choose_file)
+        self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
+        self.radiusBox.valueChanged.connect(self.update_from_text)
        
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
