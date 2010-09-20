@@ -29,6 +29,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         super(TextTools, self).__init__(parent)
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
+        self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
 
         self.radiusBox = QtGui.QSpinBox()
@@ -43,7 +44,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
 
-        self.actionImport.triggered.connect(self.choose_file)
+        self.actionOpen.triggered.connect(self.choose_file)
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.radiusBox.valueChanged.connect(self.update_from_text)
        
