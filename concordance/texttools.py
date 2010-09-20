@@ -35,7 +35,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
         self.wordField.setMaximumWidth(200)
-        self.toolBar.addWidget(QtGui.QLabel(self.tr('Word to look for:')))
+        self.toolBar.addWidget(QtGui.QLabel(self.tr('Word:')))
         self.toolBar.addWidget(self.wordField)
         spacer = QtGui.QWidget(self)
         spacer.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
