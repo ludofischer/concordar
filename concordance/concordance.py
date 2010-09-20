@@ -27,9 +27,9 @@ def make_groups(listing, size):
     >>> numbers = (1,2,3,4)
     >>> g = make_groups(numbers, 1)
     >>> g.next()
-    (1, 2, 3)
+    ('',1, 2,)
     >>> g.next()
-    (2, 3, 4)
+    (1, 2, 3)
     """
     padded = ['' for i in range(size)]
     padded.extend(listing)
@@ -52,15 +52,19 @@ def words_with_context(words):
 def parse(text):
     return words_with_context(text.split())
 
-def search(text, word, size):
+def search(iterable, word, size):
     """
-    >>> result = search('Sulle cime e sulle rape non ci sono alberi', 'ci', 2)
+    >>> result = search((u'Sulle', u'cime', u'e', u'sulle', u'rape', u'non', u'ci', u'sono', u'alberi'), 'ci', 2)
     >>> result.next()
-    u'rape non ci sono alberi'
+    (u'rape', u'non', u'ci', u'sono', u'alberi')
     """
     def contains(group):
         return group[size] == word
     from itertools import ifilter
-    return ifilter(contains, make_groups(text.split(), size))
+    return ifilter(contains, make_groups(iterable, size))
 
     
+
+    
+def search_text(text, word, size):
+    return search(text.split(), word, size)

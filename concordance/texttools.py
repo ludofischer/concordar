@@ -48,10 +48,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setPlainText(text.decode('utf-8'))
 
     def show_word_context(self, word, radius=2):
-        import concordance
         self.matchesView.clear()
-        radius = self.radiusBox.value()
-        for match in concordance.search(self.textBrowser.toPlainText(), word, radius):
+        import concordance
+        for match in concordance.search_text(self.textBrowser.toPlainText(), word, self.radiusBox.value()):
             self.matchesView.addItem(' '.join(match))
 
     def update_from_text(self):
