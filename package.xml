@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Concordance 0.1" Id="{901E31C1-2476-4919-B37C-544CD111E621}" UpgradeCode="{77C01D50-8E3E-4C3B-8D56-EA5703C3E37A}"
+  Language="1033" Codepage="1252" Version="0.1.0"
+  Manufacturer="ludovf">
+    <Package Id="*" Keywords="Installer"
+    Description="Concordance installer" InstallerVersion="100"
+    Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+    <Media Id="1" Cabinet="Concordance.cab" EmbedCab="yes" />
+	
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
+        <Directory Id="concordance" Name="concordance">
+          <Directory Id="INSTALLDIR" Name="Concordance 0.1">
+           
+		   <Component Id="MainExecutable" Guid="">
+              <File Id="MainEXE" Name="main.exe" Source="main.exe"
+              KeyPath="yes"></File>
+            </Component>
+
+            <Component Id="BzLibrary" Guid="{FA07AFB7-D09F-42CD-BDDD-65828D81A033}">
+              <File Id="Bz2PYD" Name="bz2.pyd" Source="bz2.pyd"
+              KeyPath="yes" />
+            </Component>
+
+            <Component Id="Sip" Guid="{80DF4BD7-7065-46E8-8E1C-1FC48D85FF69}">
+              <File Id="SipPYD" Name="sip.pyd" Source="sip.pyd"
+              KeyPath="yes" />
+            </Component>
+
+            <Component Id="Python" Guid="{C8E8DC3A-6DC9-42D6-A780-E46D9E00D0A2}">
+              <File Id="Python27DLL" Name="python27.dll"
+              Source="python27.dll" KeyPath="yes" />
+            </Component>
+
+            <Component Id="QtCore" Guid="{A8EA30F3-F62C-4D21-B873-A2DAA27F1DDB}">
+              <File Id="QtCoreDLL" Name="QtCore4.dll"
+              Source="QtCore4.dll" KeyPath="yes" />
+            </Component>
+
+			<Component Id="QtGui" Guid="{EB50C09C-FFC8-492A-9707-73D218F781C5}">
+				<File Id="QtGuiDLL" Name="QtGui4.dll" Source="QtGui4.dll" KeyPath="yes"/>
+			</Component>
+			
+			<Component Id="PyQtCore" Guid="{6C8A7C9C-140B-47B2-9675-BA48E9082248}">
+				<File Id="PyQt.QtCorePYD" Name="PyQt4.QtCore.pyd" Source="PyQt4.QtCore.pyd" KeyPath="yes"/>
+			</Component>
+			
+			<Component Id="PyQtGui" Guid="{E35B46AB-11B0-4435-9610-109E694D7DD7}">
+                <File Id="PyQt.QtGuiPYD" Source="PyQt4.QtGui.pyd" KeyPath="yes"/>
+            </Component>
+			
+			<Component Id="UnicodeData" Guid="{EEB08E60-B30F-40D4-9167-3268C238B714}">
+                <File Id="UnicodedataPYD" Source="unicodedata.pyd" KeyPath="yes"/>
+            </Component>
+			
+			<Component Id="Select" Guid="{8247DA70-84D3-4D03-83DC-047829786B11}">
+                <File Id="SelectPYD"  Source="select.pyd" KeyPath="yes"/>
+            </Component>
+			
+			<Component Id="LibGcc" Guid="{2C479E50-43AC-4A35-9663-2B761A06B277}">
+                <File Id="LibGccSDw21DLL" KeyPath="yes" Source="libgcc_s_dw2-1.dll" />
+            </Component>
+			
+			<Component Id="MingW" Guid="{EF533356-214B-494A-9C5B-C4BAEC620594}">
+                <File Id="MingWm10DLL" KeyPath="yes" Source="mingwm10.dll" />
+            </Component>
+			
+			</Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="Concordance 0.1">
+
+		<Component Id="ProgramMenuDir" Guid="{FCC7ADB9-5E21-4394-A427-749A218B509E}">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+            <RegistryValue Root="HKCU"
+            Key="Software\ludovf\Concordance" Type="string"
+            Value="" KeyPath="yes" />
+          </Component>
+
+		  </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <Feature Id="Complete" Level="1">
+		<ComponentRef Id="MainExecutable" />
+		<ComponentRef Id="Python" />
+		<ComponentRef Id="QtCore" />
+		<ComponentRef Id="QtGui" />
+		<ComponentRef Id="LibGcc" />
+		<ComponentRef Id="MingW" />
+		<ComponentRef Id="Sip" />
+		<ComponentRef Id="BzLibrary" />	  
+		<ComponentRef Id="UnicodeData" />	  
+		<ComponentRef Id="PyQtCore" />	  
+		<ComponentRef Id="PyQtGui" />	  
+		<ComponentRef Id="Select" />
+		<ComponentRef Id="ProgramMenuDir" />
+    </Feature>
+	
+	<UIRef Id="WixUI_Minimal" />
+  </Product>
+</Wix>
