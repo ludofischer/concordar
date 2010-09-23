@@ -9,7 +9,9 @@ def lowercase_extractor(word):
 
 def build_list(text):
     import re
-    return re.split(r'\W', text, re.UNICODE)
+    from future_builtins import filter
+    return tuple(filter(lambda x: x!= '', re.compile('\W', re.UNICODE).split(text)))
+
 
 def numerize(sequence):
     from future_builtins import zip
@@ -43,6 +45,5 @@ def get_formatted_words(sequence, groups):
     for match in get_words(sequence, groups):
         yield ' '.join(match)
     
-def search_text(text, word, width):
-    sequence = build_list(text)
+def search_sequence(sequence, word, width):
     return get_formatted_words(sequence, build_groups(extract(numerize(sequence), lowercase_extractor(word)),width, len(sequence)))
