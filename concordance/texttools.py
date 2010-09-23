@@ -55,7 +55,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
+        self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(text)
+        self.textBrowser.blockSignals(False)
         import concordance
         self.content = concordance.build_list(text)
 
