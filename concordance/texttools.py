@@ -47,7 +47,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionOpen.triggered.connect(self.choose_file)
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.radiusBox.valueChanged.connect(self.update_from_text)
-       
+        self.wordField.textEdited.connect(self.show_word_context)
+
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
         self.import_file(text_file)
@@ -61,7 +62,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         import concordance
         self.content = concordance.build_list(text)
 
-    def show_word_context(self, word, radius=2):
+    def show_word_context(self, word):
         self.matchesView.clear()
         import concordance
         items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
