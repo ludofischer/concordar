@@ -1,70 +1,49 @@
 # -*- coding: utf-8 -*-
 
-#    copyright 2010 Ludovico Fischer
-
-#    This file is part of Concordance.
-#
-#    Concordance is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    Concordance is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with Concordance.  If not, see <http://www.gnu.org/licenses/>.
-
-
 from __future__ import unicode_literals
 
+def lowercase_extractor(word):
+    def configured_extractor(match):
+        return match.lower() == word.lower()
+    return configured_extractor
 
-def make_groups(listing, size):
-    from itertools import islice, izip_longest
-    """
-    >>> numbers = (1,2,3,4)
-    >>> g = make_groups(numbers, 1)
-    >>> g.next()
-    ('',1, 2,)
-    >>> g.next()
-    (1, 2, 3)
-    """
-    padded = ['' for i in range(size)]
-    padded.extend(listing)
-   
-    phased_iterators = [ islice(padded, start, None) for start in range(size*2 + 1) ]
-    return izip_longest(*phased_iterators, fillvalue='')
+def build_list(text):
+    import re
+    from future_builtins import filter
+    return tuple(filter(lambda x: x!= '', re.compile('\W', re.UNICODE).split(text)))
 
 
-def words_with_context(words):
-    """
-    >>> words = ('cane', 'gatto', 'olio', 'corda', 'tavolo', 'orto')
-    >>> words_with_context(words).next()
-    ('olio', u'cane gatto olio corda tavolo')
-    """
-    for group in make_groups(words, 2):
-        yield (group[2], ' '.join(group),)
-  
+def numerize(sequence):
+    from future_builtins import zip
+    return zip(range(len(sequence)), sequence)
 
-
-def parse(text):
-    return words_with_context(text.split())
-
-def search(iterable, word, size):
-    """
-    >>> result = search((u'Sulle', u'cime', u'e', u'sulle', u'rape', u'non', u'ci', u'sono', u'alberi'), 'ci', 2)
-    >>> result.next()
-    (u'rape', u'non', u'ci', u'sono', u'alberi')
-    """
-    def contains(group):
-        return group[size] == word
-    from itertools import ifilter
-    return ifilter(contains, make_groups(iterable, size))
-
+def extract(iterable, extractor):
+    for (number, word) in iterable:
+        if extractor(word):
+            yield number
     
-
     
-def search_text(text, word, size):
-    return search(text.split(), word, size)
+def build_groups(iterable, width, maximum):
+    for number in iterable:
+        if number - width < 0:
+            start = 0
+        else:
+            start = number - width
+
+        if number + width + 1 > maximum:
+            end = maximum
+        else:
+            end = number + width + 1
+        yield (start, end)
+
+def get_words(sequence, groups):
+    from itertools import islice
+    for group in groups:
+        yield islice(sequence, *group)
+
+def get_formatted_words(sequence, groups):
+    for match in get_words(sequence, groups):
+        yield ' '.join(match)
+    
+def search_sequence(sequence, word, width):
+    return get_formatted_words(sequence, build_groups(extract(numerize(sequence), lowercase_extractor(word)),width, len(sequence)))

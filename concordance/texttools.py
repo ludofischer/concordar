@@ -54,14 +54,18 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
-            text = f.read()
-        self.textBrowser.setPlainText(text.decode('utf-8'))
+            text = f.read().decode('utf-8')
+        self.textBrowser.blockSignals(True)
+        self.textBrowser.setPlainText(text)
+        self.textBrowser.blockSignals(False)
+        import concordance
+        self.content = concordance.build_list(text)
 
     def show_word_context(self, word, radius=2):
         self.matchesView.clear()
         import concordance
-        for match in concordance.search_text(self.textBrowser.toPlainText(), word, self.radiusBox.value()):
-            self.matchesView.addItem(' '.join(match))
+        items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
+        self.matchesView.addItems(items)
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
