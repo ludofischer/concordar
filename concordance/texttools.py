@@ -64,8 +64,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def show_word_context(self, word, radius=2):
         self.matchesView.clear()
         import concordance
-        for match in concordance.search_sequence(self.content, word, self.radiusBox.value()):
-            self.matchesView.addItem(match)
+        items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
+        self.matchesView.addItems(items)
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
