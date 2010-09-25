@@ -17,12 +17,13 @@ def numerize(sequence):
     from future_builtins import zip
     return zip(range(len(sequence)), sequence)
 
-def find_position(iterable, criterion):
-    for (number, word) in iterable:
-        if criterion(word):
-            yield number
+def positions(sequence, word, criterion_definition=lowercase_extractor):
+    matches_criterion = criterion_definition(word)
+    for (position, thing) in numerize(sequence):
+        if matches_criterion(thing):
+            yield position
     
-def build_groups(iterable, width, maximum):
+def build_ranges(iterable, width, maximum):
     for number in iterable:
         if number - width < 0:
             start = 0
@@ -35,14 +36,12 @@ def build_groups(iterable, width, maximum):
             end = number + width + 1
         yield (start, end)
 
-def get_words(sequence, groups):
+def get_word_groups(sequence, ranges):
     from itertools import islice
-    for group in groups:
+    for group in ranges:
         yield islice(sequence, *group)
 
-def get_formatted_words(sequence, groups):
-    for match in get_words(sequence, groups):
-        yield ' '.join(match)
     
 def search_sequence(sequence, word, width):
-    return get_formatted_words(sequence, build_groups(find_position(numerize(sequence), lowercase_extractor(word)),width, len(sequence)))
+    for match in get_word_groups(sequence, build_ranges(positions(sequence, word),width, len(sequence))):
+        yield ' '.join(match)

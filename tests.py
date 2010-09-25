@@ -30,12 +30,12 @@ class ConcordanceTest(unittest.TestCase):
         result = concordance.build_list(self.sentence)
         self.assertEqual(result, self.sequence)
 
-    def test_find_position(self):
-        result = concordance.find_position(((2,'la'), (4, 'capra'), (6, 'è'), (23, 'nell'), ('5', 'orto')), lambda x:  x == 'capra')
+    def test_find_positions(self):
+        result = concordance.positions(self.sequence, 'orto')
         self.assertEqual(result.next(), 4)
 
-    def test_build_groups(self):
-        result = concordance.build_groups((0,1,2,3,4), 2, 5)
+    def test_build_ranges(self):
+        result = concordance.build_ranges((0,1,2,3,4), 2, 5)
         self.assertEqual(result.next(), (0,3))
         self.assertEqual(result.next(), (0,4))
         self.assertEqual(result.next(), (0,5))
@@ -43,8 +43,8 @@ class ConcordanceTest(unittest.TestCase):
         self.assertEqual(result.next(), (2,5))
         self.assertRaises(StopIteration, result.next)
 
-    def test_get_words(self):
-        result = concordance.get_words(self.sequence, ((0,2), (1,4)))
+    def test_get_word_groups(self):
+        result = concordance.get_word_groups(self.sequence, ((0,2), (1,4)))
         self.assertEqual(tuple(result.next()), ('La', 'capra'))
         self.assertEqual(tuple(result.next()), ('capra', 'è', 'nell'))
 
