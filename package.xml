@@ -13,7 +13,7 @@
         <Directory Id="concordance" Name="concordance">
           <Directory Id="INSTALLDIR" Name="Concordance 0.1">
            
-		   <Component Id="MainExecutable" Guid="">
+		   <Component Id="MainExecutable" Guid="{68BC9779-07D8-4A64-BD7B-93818C3248BF}">
               <File Id="MainEXE" Name="main.exe" Source="main.exe"
               KeyPath="yes"></File>
             </Component>
