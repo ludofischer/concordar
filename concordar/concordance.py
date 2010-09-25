@@ -17,11 +17,10 @@ def numerize(sequence):
     from future_builtins import zip
     return zip(range(len(sequence)), sequence)
 
-def extract(iterable, criterion):
+def find_position(iterable, criterion):
     for (number, word) in iterable:
         if criterion(word):
             yield number
-    
     
 def build_groups(iterable, width, maximum):
     for number in iterable:
@@ -46,4 +45,4 @@ def get_formatted_words(sequence, groups):
         yield ' '.join(match)
     
 def search_sequence(sequence, word, width):
-    return get_formatted_words(sequence, build_groups(extract(numerize(sequence), lowercase_extractor(word)),width, len(sequence)))
+    return get_formatted_words(sequence, build_groups(find_position(numerize(sequence), lowercase_extractor(word)),width, len(sequence)))
