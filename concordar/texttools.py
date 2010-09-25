@@ -72,8 +72,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         word = current_cursor.selectedText()
-        self.show_word_context(word)
-        
+
         self.wordField.setText(word)
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
@@ -82,4 +81,4 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         extra_selection.cursor = current_cursor
         self.textBrowser.setExtraSelections((extra_selection,))
 
-        
+        self.show_word_context(word)
