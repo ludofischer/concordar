@@ -41,8 +41,14 @@ class ConcordanceTest(unittest.TestCase):
         self.assertEqual(result.next(), (0,5))
         self.assertEqual(result.next(), (1,5))
         self.assertEqual(result.next(), (2,5))
-        
+        self.assertRaises(StopIteration, result.next)
+
     def test_get_words(self):
         result = concordance.get_words(self.sequence, ((0,2), (1,4)))
         self.assertEqual(tuple(result.next()), ('La', 'capra'))
         self.assertEqual(tuple(result.next()), ('capra', 'è', 'nell'))
+
+    def test_all(self):
+        result = concordance.search_sequence(self.sequence, 'è', 1)
+        self.assertEqual(result.next(), 'capra è nell')
+        self.assertRaises(StopIteration, result.next)
