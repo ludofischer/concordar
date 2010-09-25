@@ -17,9 +17,9 @@ def numerize(sequence):
     from future_builtins import zip
     return zip(range(len(sequence)), sequence)
 
-def extract(iterable, extractor):
+def extract(iterable, criterion):
     for (number, word) in iterable:
-        if extractor(word):
+        if criterion(word):
             yield number
     
     
