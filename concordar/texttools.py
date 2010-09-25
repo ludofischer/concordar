@@ -32,6 +32,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
 
+        self.concordanceModel = QtGui.QStringListModel()
+        self.matchesView.setModel(self.concordanceModel)
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
@@ -63,10 +65,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.content = concordance.build_list(text)
 
     def show_word_context(self, word):
-        self.matchesView.clear()
         import concordance
         items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
-        self.matchesView.addItems(items)
+        self.concordanceModel.setStringList(items)
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
