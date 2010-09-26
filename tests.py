@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import, unicode_literals
 import unittest2 as unittest
-
 from concordar import concordance
 
 class ConcordanceTest(unittest.TestCase):
@@ -36,19 +35,37 @@ class ConcordanceTest(unittest.TestCase):
 
     def test_build_ranges(self):
         result = concordance.build_ranges((0,1,2,3,4), 2, 5)
-        self.assertEqual(result.next(), (0,3))
-        self.assertEqual(result.next(), (0,4))
-        self.assertEqual(result.next(), (0,5))
-        self.assertEqual(result.next(), (1,5))
-        self.assertEqual(result.next(), (2,5))
+        self.assertEqual(result.next(), (0,(0,3)))
+        self.assertEqual(result.next(), (1,(0,4)))
+        self.assertEqual(result.next(), (2,(0,5)))
+        self.assertEqual(result.next(), (3,(1,5)))
+        self.assertEqual(result.next(), (4,(2,5)))
         self.assertRaises(StopIteration, result.next)
 
     def test_get_word_groups(self):
-        result = concordance.get_word_groups(self.sequence, ((0,2), (1,4)))
-        self.assertEqual(tuple(result.next()), ('La', 'capra'))
-        self.assertEqual(tuple(result.next()), ('capra', 'è', 'nell'))
+        result = concordance.get_word_groups(self.sequence, ((0, (0,2)), (2,(1,4))))
+        result_slice = result.next()
+        result_tuple = (result_slice[0], tuple(result_slice[1]))
+        self.assertEqual(result_tuple, (0, ('La', 'capra')))
+
 
     def test_all(self):
         result = concordance.search_sequence(self.sequence, 'è', 1)
-        self.assertEqual(result.next(), 'capra è nell')
+        self.assertEqual(result.next(), (2,'capra è nell'))
         self.assertRaises(StopIteration, result.next)
+
+from concordar import models
+
+class ModelsTest(unittest.TestCase):
+    def test_text_model(self):
+        model = models.TextModel('La capra è nel bosco')
+        self.assertEqual(model.row_count(), 5)
+        self.assertEqual(model.data(0), 'La')
+        self.assertEqual(model.data(2), 'è')
+
+    def test_concordance_model(self):
+        model = models.ConcordanceModel((('La capra è', 2), ('una capra bruca', 5)))
+        self.assertEqual(model.row_count(), 2)
+        self.assertEqual(model.column_count(), 2)
+        model_index = model.createIndex(0, 0)
+        self.assertEqual(('La capra è', 2), model.data(model_index))
