@@ -22,7 +22,7 @@ from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 
 import ui_main_window
-
+import models
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -32,8 +32,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
 
-        self.concordanceModel = QtGui.QStringListModel()
+        self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
+        self.matchesView.setModelColumn(1)
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
