@@ -59,13 +59,14 @@ from concordar import models
 class ModelsTest(unittest.TestCase):
     def test_text_model(self):
         model = models.TextModel('La capra è nel bosco')
-        self.assertEqual(model.row_count(), 5)
+        self.assertEqual(model.rowCount(), 5)
         self.assertEqual(model.data(0), 'La')
         self.assertEqual(model.data(2), 'è')
 
     def test_concordance_model(self):
-        model = models.ConcordanceModel((('La capra è', 2), ('una capra bruca', 5)))
-        self.assertEqual(model.row_count(), 2)
-        self.assertEqual(model.column_count(), 2)
+        model = models.ConcordanceModel(((2,'La capra è'), (5, 'una capra bruca',)))
+        self.assertEqual(model.rowCount(), 2)
+        self.assertEqual(model.columnCount(), 2)
+        model_index = model.createIndex(0, 1)
+        self.assertEqual(('La capra è'), model.data(model_index))
         model_index = model.createIndex(0, 0)
-        self.assertEqual(('La capra è', 2), model.data(model_index))
