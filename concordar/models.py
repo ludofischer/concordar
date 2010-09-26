@@ -6,18 +6,21 @@ import concordance
 
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):
-        super(TextModel, self).__init__(self)
+        QtCore.QAbstractListModel.__init__(self)
         self.words = concordance.build_list(text)
     
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.words)
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
-        return self.words[index]
+        if index.isValid() and role == QtCore.Qt.DisplayRole:
+            return self.words[index]
+        else:
+            return None
 
 class ConcordanceModel(QtCore.QAbstractTableModel):
     def __init__(self, matches=tuple(), parent=None):
-        super(ConcordanceModel, self).__init__(self)
+        QtCore.QAbstractTableModel.__init__(self, parent)
         self.matches = matches
 
     def rowCount(self, parent=QtCore.QModelIndex()):
@@ -27,7 +30,10 @@ class ConcordanceModel(QtCore.QAbstractTableModel):
         return 2
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
-        return self.matches[index.row()][index.column()]
+        if index.isValid() and role == QtCore.Qt.DisplayRole:
+            return self.matches[index.row()][index.column()]
+        else:
+            return None
 
     def set_matches(self, matches):
         self.beginResetModel()
