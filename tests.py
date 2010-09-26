@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import, unicode_literals
 import unittest2 as unittest
-
+from PyQt4 import QtGui
 from concordar import concordance
 
 class ConcordanceTest(unittest.TestCase):
@@ -36,19 +36,48 @@ class ConcordanceTest(unittest.TestCase):
 
     def test_build_ranges(self):
         result = concordance.build_ranges((0,1,2,3,4), 2, 5)
-        self.assertEqual(result.next(), (0,3))
-        self.assertEqual(result.next(), (0,4))
-        self.assertEqual(result.next(), (0,5))
-        self.assertEqual(result.next(), (1,5))
-        self.assertEqual(result.next(), (2,5))
+        self.assertEqual(result.next(), (0,(0,3)))
+        self.assertEqual(result.next(), (1,(0,4)))
+        self.assertEqual(result.next(), (2,(0,5)))
+        self.assertEqual(result.next(), (3,(1,5)))
+        self.assertEqual(result.next(), (4,(2,5)))
         self.assertRaises(StopIteration, result.next)
 
     def test_get_word_groups(self):
-        result = concordance.get_word_groups(self.sequence, ((0,2), (1,4)))
-        self.assertEqual(tuple(result.next()), ('La', 'capra'))
-        self.assertEqual(tuple(result.next()), ('capra', 'è', 'nell'))
+        result = concordance.get_word_groups(self.sequence, ((0, (0,2)), (2,(1,4))))
+        result_slice = result.next()
+        result_tuple = (result_slice[0], tuple(result_slice[1]))
+        self.assertEqual(result_tuple, (0, ('La', 'capra')))
+
 
     def test_all(self):
         result = concordance.search_sequence(self.sequence, 'è', 1)
-        self.assertEqual(result.next(), 'capra è nell')
+        self.assertEqual(result.next(), (2,'capra è nell'))
         self.assertRaises(StopIteration, result.next)
+
+from concordar import models
+
+class ModelsTest(unittest.TestCase):
+    def test_text_model(self):
+        model = models.TextModel('La capra è nel bosco')
+        self.assertEqual(model.rowCount(), 5)
+        self.assertEqual(model.data(model.index(0,0)), 'La')
+        self.assertEqual(model.data(model.index(2,0)), 'è')
+
+    def test_concordance_model(self):
+        model = models.ConcordanceModel(((2,'La capra è'), (5, 'una capra bruca',)))
+        self.assertEqual(model.rowCount(), 2)
+        self.assertEqual(model.columnCount(), 2)
+        model_index = model.index(0, 1)
+        self.assertEqual('La capra è', model.data(model_index))
+        model_index = model.index(1, 1)
+        self.assertEqual('una capra bruca', model.data(model_index))
+
+        model.set_matches(((1, 'il tonno è'), (34, 'la velocità dei galli')))
+        model_index = model.index(0, 1)
+        self.assertEqual('il tonno è', model.data(model_index))
+        
+#        view = QtGui.QListView()
+ #       view.setModel(model)
+
+    

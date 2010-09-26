@@ -22,7 +22,7 @@ from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 
 import ui_main_window
-
+import models
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -32,6 +32,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
 
+        self.concordanceModel = models.ConcordanceModel()
+        self.matchesView.setModel(self.concordanceModel)
+        self.matchesView.setModelColumn(1)
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
@@ -48,6 +51,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.radiusBox.valueChanged.connect(self.update_from_text)
         self.wordField.textEdited.connect(self.show_word_context)
+        self.matchesView.clicked.connect(self.move_cursor_to_word)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
@@ -63,10 +67,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.content = concordance.build_list(text)
 
     def show_word_context(self, word):
-        self.matchesView.clear()
         import concordance
         items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
-        self.matchesView.addItems(items)
+        self.concordanceModel.set_matches(items)
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
@@ -82,3 +85,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
         self.show_word_context(word)
+
+
+    def move_cursor_to_word(self, index):
+        model = index.model()
+        word_position = model.data(model.index(index.row(), 0))
+        print word_position

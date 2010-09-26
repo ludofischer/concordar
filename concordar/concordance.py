@@ -34,14 +34,14 @@ def build_ranges(iterable, width, maximum):
             end = maximum
         else:
             end = number + width + 1
-        yield (start, end)
+        yield (number, (start, end))
 
 def get_word_groups(sequence, ranges):
     from itertools import islice
-    for group in ranges:
-        yield islice(sequence, *group)
+    for position, group in ranges:
+        yield (position, islice(sequence, *group))
 
     
 def search_sequence(sequence, word, width):
-    for match in get_word_groups(sequence, build_ranges(positions(sequence, word),width, len(sequence))):
-        yield ' '.join(match)
+    for position, match in get_word_groups(sequence, build_ranges(positions(sequence, word),width, len(sequence))):
+        yield (position, ' '.join(match))
