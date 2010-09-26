@@ -29,7 +29,6 @@ class ConcordanceModel(QtCore.QAbstractTableModel):
     def data(self, index, role=QtCore.Qt.DisplayRole):
         return self.matches[index.row()][index.column()]
 
-
     def set_matches(self, matches):
         self.beginResetModel()
         self.matches = matches
