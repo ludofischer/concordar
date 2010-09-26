@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Name="Concordance 0.1" Id="{901E31C1-2476-4919-B37C-544CD111E621}" UpgradeCode="{77C01D50-8E3E-4C3B-8D56-EA5703C3E37A}"
   Language="1033" Codepage="1252" Version="0.1.0"
-  Manufacturer="Ludovico Fischer">
+  Manufacturer="ludovf">
     <Package Id="*" Keywords="Installer"
     Description="Concordance installer" InstallerVersion="100"
     Languages="1033" Compressed="yes" SummaryCodepage="1252" />
@@ -10,7 +10,7 @@
 	
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
-        <Directory Id="concordance" Name="Concordance">
+        <Directory Id="concordance" Name="concordance">
           <Directory Id="INSTALLDIR" Name="Concordance 0.1">
            
 		   <Component Id="MainExecutable" Guid="{68BC9779-07D8-4A64-BD7B-93818C3248BF}">
@@ -102,6 +102,6 @@
     </Feature>
 	
 	<UIRef Id="WixUI_Minimal" />
-	<WixVariable Id="WixUILicenseRtf" Value="LICENSE.rtf"/>
   </Product>
 </Wix>
+
