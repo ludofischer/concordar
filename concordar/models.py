@@ -6,7 +6,7 @@ import concordance
 
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):
-        super(TextModel, self).__init__()
+        super(TextModel, self).__init__(self)
         self.words = concordance.build_list(text)
     
     def rowCount(self, parent=QtCore.QModelIndex()):
@@ -16,8 +16,8 @@ class TextModel(QtCore.QAbstractListModel):
         return self.words[index]
 
 class ConcordanceModel(QtCore.QAbstractTableModel):
-    def __init__(self, matches=tuple()):
-        super(ConcordanceModel, self).__init__()
+    def __init__(self, matches=tuple(), parent=None):
+        super(ConcordanceModel, self).__init__(self)
         self.matches = matches
 
     def rowCount(self, parent=QtCore.QModelIndex()):
