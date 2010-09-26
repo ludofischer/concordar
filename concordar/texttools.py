@@ -51,6 +51,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.radiusBox.valueChanged.connect(self.update_from_text)
         self.wordField.textEdited.connect(self.show_word_context)
+        self.matchesView.clicked.connect(self.move_cursor_to_word)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
@@ -84,3 +85,10 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
         self.show_word_context(word)
+
+
+    def move_cursor_to_word(self, index):
+        model = index.model()
+        word_position = model.data(model.index(index.row(), 0))
+        print word_position
+        
