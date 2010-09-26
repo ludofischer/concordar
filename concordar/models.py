@@ -14,7 +14,7 @@ class TextModel(QtCore.QAbstractListModel):
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
         if index.isValid() and role == QtCore.Qt.DisplayRole:
-            return self.words[index]
+            return self.words[index.row()]
         else:
             return None
 

@@ -91,4 +91,3 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         model = index.model()
         word_position = model.data(model.index(index.row(), 0))
         print word_position
-        

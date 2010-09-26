@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import, unicode_literals
 import unittest2 as unittest
+from PyQt4 import QtGui
 from concordar import concordance
 
 class ConcordanceTest(unittest.TestCase):
@@ -75,4 +76,8 @@ class ModelsTest(unittest.TestCase):
         model.set_matches(((1, 'il tonno è'), (34, 'la velocità dei galli')))
         model_index = model.index(0, 1)
         self.assertEqual('il tonno è', model.data(model_index))
+        
+#        view = QtGui.QListView()
+ #       view.setModel(model)
 
+    
