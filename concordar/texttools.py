@@ -63,12 +63,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(text)
         self.textBrowser.blockSignals(False)
-        import concordance
-        self.content = concordance.build_list(text)
+        import alternate
+        self.content = alternate.import_file(text)
 
     def show_word_context(self, word):
-        import concordance
-        items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
+        import alternate
+        items = tuple(alternate.positions(self.content, word))
         self.concordanceModel.set_matches(items)
 
     def update_from_text(self):
@@ -93,12 +93,13 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         print word_position
 
         cursor = self.textBrowser.textCursor()
-        cursor.movePosition(QtGui.QTextCursor.Start)
-        cursor.movePosition(QtGui.QTextCursor.NextWord, QtGui.QTextCursor.MoveAnchor, word_position)
+      
+        cursor.setPosition(word_position)
         cursor.select(QtGui.QTextCursor.WordUnderCursor)
         print cursor.selectedText()
+        print cursor.position()
         self.textBrowser.blockSignals(True)
         self.textBrowser.setTextCursor(cursor)
         self.textBrowser.centerCursor()
-
+        
         self.textBrowser.blockSignals(False)
