@@ -68,13 +68,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
         self.matchesView.addItems(items)
 
-    def update_from_text(self):
-        current_cursor = self.textBrowser.textCursor()
-        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        word = current_cursor.selectedText()
-        self.show_word_context(word)
-        
-        self.wordField.setText(word)
+    def set_selection(self, current_cursor):
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
         selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
@@ -82,4 +76,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         extra_selection.cursor = current_cursor
         self.textBrowser.setExtraSelections((extra_selection,))
 
+
+    def update_from_text(self):
+        current_cursor = self.textBrowser.textCursor()
+        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        word = current_cursor.selectedText()
+        self.show_word_context(word)
         
+        self.wordField.setText(word)
+        self.set_selection(current_cursor)
