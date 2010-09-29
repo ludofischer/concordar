@@ -68,7 +68,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def show_word_context(self, word):
         import alternate
-        items = tuple(alternate.positions(self.content, word))
+        items = tuple(alternate.search_sequence(self.content, word, self.radiusBox.value()))
         self.concordanceModel.set_matches(items)
 
 
