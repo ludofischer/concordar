@@ -90,14 +90,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def move_cursor_to_word(self, index):
         model = index.model()
         word_position = model.data(model.index(index.row(), 0))
-        print word_position
-
+       
         cursor = self.textBrowser.textCursor()
       
         cursor.setPosition(word_position)
         cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        print cursor.selectedText()
-        print cursor.position()
+       
         self.textBrowser.blockSignals(True)
         self.textBrowser.setTextCursor(cursor)
         self.textBrowser.centerCursor()

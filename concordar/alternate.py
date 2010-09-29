@@ -4,9 +4,11 @@ from concordance import lowercase_extractor
 
 def import_file(text):
    def generate_list(text):
-      cursor = QtGui.QTextCursor(QtGui.QTextDocument(text))
+      doc = QtGui.QTextDocument(text)
+      cursor = QtGui.QTextCursor(doc)
+      cursor.select(QtGui.QTextCursor.WordUnderCursor)
       while cursor.movePosition(QtGui.QTextCursor.NextWord):
-         cursor.select(QTextCursor.WordUnderCursor)
+         cursor.select(QtGui.QTextCursor.WordUnderCursor)
          yield (cursor.position(), cursor.selectedText())
    
    return tuple(generate_list(text))
