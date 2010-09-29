@@ -71,18 +71,21 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         items = tuple(alternate.positions(self.content, word))
         self.concordanceModel.set_matches(items)
 
-    def update_from_text(self):
-        current_cursor = self.textBrowser.textCursor()
-        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        word = current_cursor.selectedText()
 
-        self.wordField.setText(word)
+    def highlight_selected_word(self, cursor):
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
         selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
         extra_selection.format = selected_format
-        extra_selection.cursor = current_cursor
+        extra_selection.cursor = cursor
         self.textBrowser.setExtraSelections((extra_selection,))
+
+    def update_from_text(self):
+        current_cursor = self.textBrowser.textCursor()
+        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        word = current_cursor.selectedText()
+        self.wordField.setText(word)
+        self.highlight_selected_word(current_cursor)
 
         self.show_word_context(word)
 
