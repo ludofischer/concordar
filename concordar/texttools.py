@@ -66,8 +66,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         import alternate
         self.content = alternate.import_file(text)
 
-    def show_word_context(self, word):
+    def show_word_context(self):
         import alternate
+        word = self.wordField.text()
         items = tuple(alternate.search_sequence(self.content, word, self.radiusBox.value()))
         self.concordanceModel.set_matches(items)
 
@@ -87,7 +88,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.wordField.setText(word)
         self.highlight_selected_word(current_cursor)
 
-        self.show_word_context(word)
+        self.show_word_context()
 
 
     def move_cursor_to_word(self, index):
