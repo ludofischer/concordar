@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Name="Concordance 0.1" Id="{901E31C1-2476-4919-B37C-544CD111E621}" UpgradeCode="{77C01D50-8E3E-4C3B-8D56-EA5703C3E37A}"
-  Language="1033" Codepage="1252" Version="0.1.0"
-  Manufacturer="ludovf">
+  <Product Name="Concordar 0.1.1" Id="{901E31C1-2476-4919-B37C-544CD111E621}" UpgradeCode="{77C01D50-8E3E-4C3B-8D56-EA5703C3E37A}"
+  Language="1033" Codepage="1252" Version="0.1.1"
+  Manufacturer="Ludovico Fischer">
     <Package Id="*" Keywords="Installer"
-    Description="Concordance installer" InstallerVersion="100"
+    Description="Concordar installer" InstallerVersion="100"
     Languages="1033" Compressed="yes" SummaryCodepage="1252" />
-    <Media Id="1" Cabinet="Concordance.cab" EmbedCab="yes" />
+    <Media Id="1" Cabinet="Concordar.cab" EmbedCab="yes" />
 	
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
-        <Directory Id="concordance" Name="concordance">
-          <Directory Id="INSTALLDIR" Name="Concordance 0.1">
+        <Directory Id="concordar" Name="Concordar">
+          <Directory Id="INSTALLDIR" Name="Concordar 0.1.1">
            
 		   <Component Id="MainExecutable" Guid="{68BC9779-07D8-4A64-BD7B-93818C3248BF}">
-              <File Id="MainEXE" Name="main.exe" Source="main.exe"
+              <File Id="MainEXE" Name="concordar.exe" Source="main.exe"
               KeyPath="yes"></File>
             </Component>
 
@@ -71,12 +71,12 @@
       </Directory>
 
       <Directory Id="ProgramMenuFolder" Name="Programs">
-        <Directory Id="ProgramMenuDir" Name="Concordance 0.1">
+        <Directory Id="ProgramMenuDir" Name="Concordar 0.1">
 
 		<Component Id="ProgramMenuDir" Guid="{FCC7ADB9-5E21-4394-A427-749A218B509E}">
             <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
             <RegistryValue Root="HKCU"
-            Key="Software\ludovf\Concordance" Type="string"
+            Key="Software\ludovf\Concordar" Type="string"
             Value="" KeyPath="yes" />
           </Component>
 
@@ -100,7 +100,7 @@
 		<ComponentRef Id="Select" />
 		<ComponentRef Id="ProgramMenuDir" />
     </Feature>
-	
+	<WixVariable Id="WixUILicenseRtf" Value="LICENSE.rtf"/>
 	<UIRef Id="WixUI_Minimal" />
   </Product>
 </Wix>
