@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import unittest2
-import alternate
+from concordar import alternate
 
 
 class AlternateTest(unittest2.TestCase):
