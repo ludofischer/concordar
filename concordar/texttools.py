@@ -63,31 +63,47 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(text)
         self.textBrowser.blockSignals(False)
-        import concordance
-        self.content = concordance.build_list(text)
+        import alternate
+        self.content = alternate.import_file(text)
 
-    def show_word_context(self, word):
-        import concordance
-        items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
+    def show_word_context(self):
+        import alternate
+        word = self.wordField.text()
+        items = tuple(alternate.search_sequence(self.content, word, self.radiusBox.value()))
         self.concordanceModel.set_matches(items)
+
+
+    def highlight_selected_word(self, cursor):
+        extra_selection = QtGui.QTextEdit.ExtraSelection()
+        selected_format = QtGui.QTextCharFormat()
+        selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
+        extra_selection.format = selected_format
+        extra_selection.cursor = cursor
+        self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         word = current_cursor.selectedText()
-
         self.wordField.setText(word)
-        extra_selection = QtGui.QTextEdit.ExtraSelection()
-        selected_format = QtGui.QTextCharFormat()
-        selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
-        extra_selection.format = selected_format
-        extra_selection.cursor = current_cursor
-        self.textBrowser.setExtraSelections((extra_selection,))
+        self.highlight_selected_word(current_cursor)
 
-        self.show_word_context(word)
+        self.show_word_context()
 
 
     def move_cursor_to_word(self, index):
         model = index.model()
         word_position = model.data(model.index(index.row(), 0))
+
         
+        cursor = self.textBrowser.textCursor()
+      
+        cursor.setPosition(word_position)
+        cursor.select(QtGui.QTextCursor.WordUnderCursor)
+       
+        self.textBrowser.blockSignals(True)
+        self.textBrowser.setTextCursor(cursor)
+        self.textBrowser.centerCursor()
+        
+        self.textBrowser.blockSignals(False)
+
