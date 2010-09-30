@@ -4,7 +4,6 @@ from PyQt4 import QtGui
 from concordance import lowercase_extractor, numerize
 
 def search_sequence(sequence, word, width):
-   from itertools import islice
    for coord, match in get_word_groups(sequence, build_ranges(positions(sequence, word), width, len(sequence))):
       words = [item[1] for item in match]
       yield(coord, ' '.join(words))
@@ -13,7 +12,7 @@ def search_sequence(sequence, word, width):
 def get_word_groups(sequence, ranges):
     from itertools import islice
     for coord, start, end in ranges:
-        yield (coord, islice(sequence, start, end))
+        yield (coord, sequence[start:end])
 
 def build_ranges(iterable, width, maximum):
     for index, coord in iterable:
