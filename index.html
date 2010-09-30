@@ -1,18 +1,42 @@
 <!DOCTYPE html>
 
-<html charset="utf-8" lang="en">
+<html lang="en">
   <head>
-<title>Concordar - Concordance software</title>
+    <meta charset="utf-8" />
+    <title>Concordar &ndash; concordance software</title>
 </head>
 <body>
-<h1>Concordar - Concordance software</h1>
-<p>Concordar allows you to build a concordance of any text you choose through a simple graphical interface. Concordar is cross-platform and works on Windows and Linux.</p>
+<h1>Concordar &ndash; concordance software</h1>
+<p>Concordar allows you to build a concordance of any text you choose through a simple graphical interface. Concordar is cross-platform, written in <a href="http://www.python.org/">Python</a> using the <a href="http://qt.nokia.com/">Qt</a> graphical toolkit, and licensed under the terms of the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>.</p>
+
 <h2>Download</h2>
-<p>Concordar is undergoing development and might present bugs.</p>
-<p>Please select your platform:</p>
-<dl>
-  <dt><a href="http://github.com/ludovicofischer/Concordar/downloads"></a>Windows</dt>
-  <dd>Download Install Concordance.msi. Double click to start the installation. Concordar will be installed in Program Files &gt; Concordance &gt; Concordance 0.1. To uninstall, choose Start &gt; Control Panel &gt; Programs &gt; Uninstall.
-</dl>
+<p>Concordar is offered as is, without any explicit or implied guarantees of suitability for any particular purpose.</p>
+
+  <h3>Windows</h3>
+  <p>Download the Windows installer from the <a href="http://github.com/ludovicofischer/Concordar/downloads">downloads page</a> to any location on disk. Double click to start the installation. Concordar will be installed in Program Files &gt; Concordance &gt; Concordance 0.1.2 To uninstall, choose Start &gt; Control Panel &gt; Programs &gt; Uninstall.</p>
+  <h3>Linux</h3>
+  <p>Make sure you have the PyQt4 Python bindings installed through your package manager. Download and unpack the source tarball from github, then run concordar/main.py.</p>
+  <h3>Mac</h3>
+  <p>No Mac package is available at present. If you desire to run Concordar, you should install PyQt4 from <a href="http://www.riverbankcomputing.co.uk/news">Riverbank Computing</a>, then use the source tarball as on Linux.</p>
+
+
+<h2>Usage</h2>
+<p>Concordar is really easy to use. Just click on any word in the text to display a complete concordance. Here&#8217;s the long story:</p>
+<ol>
+  <li>Use your favourite program to save the text you need to study as a plain text file. If your text contains non-English characters (this include accents), you must save the file with the UTF-8 encoding. UTF-8 is the most common encoding which allows interoperability between texts written in different alphabets. If the file is saved with another encoding, Concordar will work, but you might see strange wiggles instead of letters.</li>
+  <li>In Concordar, select File &gt; Open to import your text.</li>
+  <li>Click on any word in the lef pane to display a concordance for that word.</li>
+  <li>Clic on any line in the concordance to move to the corresponding occurence within the text.</li>
+</ol>
+<h2>Known bugs</h2>
+<ul>
+  <li>The program gives the impression to freeze when building a concordance for a word with a large number of occurences (> 10 000). The program should finish its job given enough time.</li>
+  <li>A punctuation sign next to a word will sometimes be highlighted instead of the word.</li>
+</ul>
+
+<h2>Contribute</h2>
+The source for Concordar in <a href="http://github.com/ludovicofischer/Concordar">hosted on github</a>.
+
+<p>Copyright 2010 Ludovico Fischer</p>
 </body>
 </html>
