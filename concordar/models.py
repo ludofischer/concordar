@@ -8,13 +8,15 @@ import alternate
 class Server(object):
     def __init__(self):
         self.text = ''
-
+        self.tokenized = None
     def set_text(self, text):
         self.text = text
+        self.tokenized = None
 
     def give_basic_concordance(self, word, radius):
-        self.content = alternate.import_file(self.text)
-        return tuple(alternate.search_sequence(self.content, word, radius))
+        if not self.tokenized:
+            self.tokenized = alternate.import_file(self.text)
+        return tuple(alternate.search_sequence(self.tokenized, word, radius))
 
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):

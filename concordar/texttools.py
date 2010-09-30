@@ -90,9 +90,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def update_from_text(self):
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        self.highlight_selected_word(current_cursor)
         word = current_cursor.selectedText()
         self.wordField.setText(word)
-        self.highlight_selected_word(current_cursor)
 
         self.show_word_context()
 
