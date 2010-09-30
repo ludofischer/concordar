@@ -42,19 +42,19 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-
         self.actionOpen.triggered.connect(self.choose_file)
 
         self.server = models.Server()
+        self.connect_slots()
+        self.setup_basic_concordance()
 
-        self.setup_basic_interface()
-
-    def setup_basic_interface(self):
-        self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
+    def connect_slots(self):
+        self.textBrowser.cursorPositionChanged.connect(self.new_word_selected_in_text)
         self.radiusBox.valueChanged.connect(self.show_word_context)
-        self.wordField.textEdited.connect(self.show_word_context)
+        self.wordField.textEdited.connect(self.new_word_typed)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
+    def setup_basic_concordance(self):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
@@ -63,25 +63,17 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
         self.import_file(text_file)
 
-    def prepare_browser(self):
-        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
-        self.textBrowser.blockSignals(True)
-        self.textBrowser.setPlainText(self.server.text)
-        self.textBrowser.blockSignals(False)
-
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
         self.server.set_text(text)
         self.prepare_browser()
 
-    def highlight_selected_word(self, cursor):
-        extra_selection = QtGui.QTextEdit.ExtraSelection()
-        selected_format = QtGui.QTextCharFormat()
-        selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
-        extra_selection.format = selected_format
-        extra_selection.cursor = cursor
-        self.textBrowser.setExtraSelections((extra_selection,))
+    def prepare_browser(self):
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
+        self.textBrowser.blockSignals(True)
+        self.textBrowser.setPlainText(self.server.text)
+        self.textBrowser.blockSignals(False)
 
     def move_cursor_to_word(self, index):
         model = index.model()
@@ -98,16 +90,26 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         
         self.textBrowser.blockSignals(False)
 
-    def update_from_text(self):
+    def new_word_selected_in_text(self):
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         self.highlight_selected_word(current_cursor)
-        word = current_cursor.selectedText()
-        self.wordField.setText(word)
-
+        self.word = current_cursor.selectedText()
+        self.wordField.setText(self.word)
         self.show_word_context()
 
+    def new_word_typed(self, word):
+        self.word = word
+        self.show_word_context()
+
+    def highlight_selected_word(self, cursor):
+        extra_selection = QtGui.QTextEdit.ExtraSelection()
+        selected_format = QtGui.QTextCharFormat()
+        selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
+        extra_selection.format = selected_format
+        extra_selection.cursor = cursor
+        self.textBrowser.setExtraSelections((extra_selection,))
+
     def show_word_context(self):
-        word = self.wordField.text()
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(word, self.radiusBox.value()))
+        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.word, self.radiusBox.value()))
 
