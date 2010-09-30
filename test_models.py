@@ -5,11 +5,6 @@ import unittest2 as unittest
 from concordar import models
 
 class ModelsTest(unittest.TestCase):
-    def test_text_model(self):
-        model = models.TextModel('La capra è nel bosco')
-        self.assertEqual(model.rowCount(), 5)
-        self.assertEqual(model.data(model.index(0,0)), 'La')
-        self.assertEqual(model.data(model.index(2,0)), 'è')
 
     def test_concordance_model(self):
         model = models.ConcordanceModel(((2,'La capra è'), (5, 'una capra bruca',)))
@@ -24,7 +19,8 @@ class ModelsTest(unittest.TestCase):
         model_index = model.index(0, 1)
         self.assertEqual('il tonno è', model.data(model_index))
         
-#        view = QtGui.QListView()
- #       view.setModel(model)
 
-    
+    def test_server(self):
+        server = models.Server()
+        result = server.give_basic_concordance('Love is in the air', 'in', 1)
+        

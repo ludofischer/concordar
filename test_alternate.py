@@ -22,7 +22,7 @@ class AlternateTest(unittest2.TestCase):
         
     def test_word_groups(self):
         result = alternate.get_word_groups(self.sequence, ((0,0,2),(1,1,2)))
-        self.assertEqual(tuple(result.next()), ((2,'La',), (8, 'capra'),)) 
+        self.assertEqual(result.next(), (0, ((2,'La',), (8, 'capra')))) 
 
     def test_all(self):
         result = alternate.search_sequence(self.sequence, 'capra', 1)

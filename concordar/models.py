@@ -9,27 +9,11 @@ class Server(object):
     def __init__(self):
         self.tokenized = None
 
-    def flush(self):
-        self.tokenized = None
+    def give_basic_concordance(self, text, word, radius, tokenized=None):
+        if not tokenized:
+            tokenized = alternate.import_file(text)
+        return tuple(alternate.search_sequence(tokenized, word, radius))
 
-    def give_basic_concordance(self, text, word, radius):
-        if not self.tokenized:
-            self.tokenized = alternate.import_file(text)
-        return tuple(alternate.search_sequence(self.tokenized, word, radius))
-
-class TextModel(QtCore.QAbstractListModel):
-    def __init__(self, text):
-        QtCore.QAbstractListModel.__init__(self)
-        self.words = concordance.build_list(text)
-    
-    def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self.words)
-
-    def data(self, index, role=QtCore.Qt.DisplayRole):
-        if index.isValid() and role == QtCore.Qt.DisplayRole:
-            return self.words[index.row()]
-        else:
-            return None
 
 class ConcordanceModel(QtCore.QAbstractTableModel):
     def __init__(self, matches=tuple(), parent=None):
