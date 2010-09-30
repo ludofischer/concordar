@@ -3,6 +3,19 @@
 from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 import concordance
+import alternate
+
+class Server(object):
+    def __init__(self):
+        self.tokenized = None
+
+    def flush(self):
+        self.tokenized = None
+
+    def give_basic_concordance(self, text, word, radius):
+        if not self.tokenized:
+            self.tokenized = alternate.import_file(text)
+        return tuple(alternate.search_sequence(self.tokenized, word, radius))
 
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):
