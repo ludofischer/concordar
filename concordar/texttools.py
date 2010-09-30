@@ -61,18 +61,19 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
-        self.import_file(text_file)
+        self.change_working_file(text_file)
 
-    def import_file(self, text_file):
+    def change_working_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
-        self.server.set_text(text)
+        self.text = text
+        self.server.flush()
         self.prepare_browser()
 
     def prepare_browser(self):
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         self.textBrowser.blockSignals(True)
-        self.textBrowser.setPlainText(self.server.text)
+        self.textBrowser.setPlainText(self.text)
         self.textBrowser.blockSignals(False)
 
     def move_cursor_to_word(self, index):
@@ -111,5 +112,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def show_word_context(self):
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.word, self.radiusBox.value()))
+        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value()))
 
