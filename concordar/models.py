@@ -17,19 +17,6 @@ class Server(object):
             self.tokenized = alternate.import_file(text)
         return tuple(alternate.search_sequence(self.tokenized, word, radius))
 
-class TextModel(QtCore.QAbstractListModel):
-    def __init__(self, text):
-        QtCore.QAbstractListModel.__init__(self)
-        self.words = concordance.build_list(text)
-    
-    def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self.words)
-
-    def data(self, index, role=QtCore.Qt.DisplayRole):
-        if index.isValid() and role == QtCore.Qt.DisplayRole:
-            return self.words[index.row()]
-        else:
-            return None
 
 class ConcordanceModel(QtCore.QAbstractTableModel):
     def __init__(self, matches=tuple(), parent=None):
