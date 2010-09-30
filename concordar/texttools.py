@@ -30,11 +30,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
-        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
 
-        self.concordanceModel = models.ConcordanceModel()
-        self.matchesView.setModel(self.concordanceModel)
-        self.matchesView.setModelColumn(1)
+
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
@@ -53,18 +50,28 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.wordField.textEdited.connect(self.show_word_context)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
+        self.server = models.Server()
+        self.concordanceModel = models.ConcordanceModel()
+        self.matchesView.setModel(self.concordanceModel)
+        self.matchesView.setModelColumn(1)
+
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
         self.import_file(text_file)
 
+    def prepare_browser(self):
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
+        self.textBrowser.blockSignals(True)
+        self.textBrowser.setPlainText(self.server.text)
+        self.textBrowser.blockSignals(False)
+
     def import_file(self, text_file):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
-        self.textBrowser.blockSignals(True)
-        self.textBrowser.setPlainText(text)
-        self.textBrowser.blockSignals(False)
+        self.server.set_text(text)
         import alternate
         self.content = alternate.import_file(text)
+        self.prepare_browser()
 
     def show_word_context(self):
         import alternate

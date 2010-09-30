@@ -4,6 +4,14 @@ from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 import concordance
 
+class Server(object):
+    def set_text(self, text):
+        self.text = text
+
+    def compute_basic_concordance():
+        return ()
+    
+
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):
         QtCore.QAbstractListModel.__init__(self)
