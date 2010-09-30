@@ -9,13 +9,10 @@ class Server(object):
     def __init__(self):
         self.tokenized = None
 
-    def flush(self):
-        self.tokenized = None
-
-    def give_basic_concordance(self, text, word, radius):
-        if not self.tokenized:
-            self.tokenized = alternate.import_file(text)
-        return tuple(alternate.search_sequence(self.tokenized, word, radius))
+    def give_basic_concordance(self, text, word, radius, tokenized=None):
+        if not tokenized:
+            tokenized = alternate.import_file(text)
+        return tuple(alternate.search_sequence(tokenized, word, radius))
 
 
 class ConcordanceModel(QtCore.QAbstractTableModel):

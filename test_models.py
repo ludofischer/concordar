@@ -19,7 +19,8 @@ class ModelsTest(unittest.TestCase):
         model_index = model.index(0, 1)
         self.assertEqual('il tonno è', model.data(model_index))
         
-#        view = QtGui.QListView()
- #       view.setModel(model)
 
-    
+    def test_server(self):
+        server = models.Server()
+        result = server.give_basic_concordance('Love is in the air', 'in', 1)
+        
