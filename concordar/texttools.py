@@ -46,15 +46,15 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
         self.server = models.Server()
         self.connect_slots()
-        self.setup_basic_concordance()
+        self.setup_interactive_concordance()
 
     def connect_slots(self):
         self.textBrowser.cursorPositionChanged.connect(self.new_word_selected_in_text)
-        self.radiusBox.valueChanged.connect(self.show_word_context)
+        self.radiusBox.valueChanged.connect(self.update_concordance)
         self.wordField.textEdited.connect(self.new_word_typed)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
-    def setup_basic_concordance(self):
+    def setup_interactive_concordance(self):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
@@ -97,11 +97,11 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.highlight_selected_word(current_cursor)
         self.word = current_cursor.selectedText()
         self.wordField.setText(self.word)
-        self.show_word_context()
+        self.update_concordance()
 
     def new_word_typed(self, word):
         self.word = word
-        self.show_word_context()
+        self.update_concordance()
 
     def highlight_selected_word(self, cursor):
         extra_selection = QtGui.QTextEdit.ExtraSelection()
@@ -111,6 +111,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         extra_selection.cursor = cursor
         self.textBrowser.setExtraSelections((extra_selection,))
 
-    def show_word_context(self):
+    def update_concordance(self):
         self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value()))
 
