@@ -31,7 +31,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
 
-
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
@@ -45,12 +44,17 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(self.radiusBox)
 
         self.actionOpen.triggered.connect(self.choose_file)
+
+        self.server = models.Server()
+
+        self.setup_basic_interface()
+
+    def setup_basic_interface(self):
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
         self.radiusBox.valueChanged.connect(self.update_from_text)
         self.wordField.textEdited.connect(self.show_word_context)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
-        self.server = models.Server()
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
