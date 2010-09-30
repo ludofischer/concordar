@@ -51,7 +51,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def setup_basic_interface(self):
         self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
-        self.radiusBox.valueChanged.connect(self.update_from_text)
+        self.radiusBox.valueChanged.connect(self.show_word_context)
         self.wordField.textEdited.connect(self.show_word_context)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
@@ -75,10 +75,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.server.set_text(text)
         self.prepare_browser()
 
-    def show_word_context(self):
-        word = self.wordField.text()
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(word, self.radiusBox.value()))
-
     def highlight_selected_word(self, cursor):
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
@@ -86,15 +82,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         extra_selection.format = selected_format
         extra_selection.cursor = cursor
         self.textBrowser.setExtraSelections((extra_selection,))
-
-    def update_from_text(self):
-        current_cursor = self.textBrowser.textCursor()
-        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        self.highlight_selected_word(current_cursor)
-        word = current_cursor.selectedText()
-        self.wordField.setText(word)
-
-        self.show_word_context()
 
     def move_cursor_to_word(self, index):
         model = index.model()
@@ -110,3 +97,17 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.centerCursor()
         
         self.textBrowser.blockSignals(False)
+
+    def update_from_text(self):
+        current_cursor = self.textBrowser.textCursor()
+        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        self.highlight_selected_word(current_cursor)
+        word = current_cursor.selectedText()
+        self.wordField.setText(word)
+
+        self.show_word_context()
+
+    def show_word_context(self):
+        word = self.wordField.text()
+        self.concordanceModel.set_matches(self.server.give_basic_concordance(word, self.radiusBox.value()))
+
