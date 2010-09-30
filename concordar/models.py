@@ -3,14 +3,18 @@
 from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 import concordance
+import alternate
 
 class Server(object):
+    def __init__(self):
+        self.text = ''
+
     def set_text(self, text):
         self.text = text
 
-    def compute_basic_concordance():
-        return ()
-    
+    def give_basic_concordance(self, word, radius):
+        self.content = alternate.import_file(self.text)
+        return tuple(alternate.search_sequence(self.content, word, radius))
 
 class TextModel(QtCore.QAbstractListModel):
     def __init__(self, text):

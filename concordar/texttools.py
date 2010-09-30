@@ -73,16 +73,11 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
         self.server.set_text(text)
-        import alternate
-        self.content = alternate.import_file(text)
         self.prepare_browser()
 
     def show_word_context(self):
-        import alternate
         word = self.wordField.text()
-        items = tuple(alternate.search_sequence(self.content, word, self.radiusBox.value()))
-        self.concordanceModel.set_matches(items)
-
+        self.concordanceModel.set_matches(self.server.give_basic_concordance(word, self.radiusBox.value()))
 
     def highlight_selected_word(self, cursor):
         extra_selection = QtGui.QTextEdit.ExtraSelection()
@@ -100,7 +95,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.highlight_selected_word(current_cursor)
 
         self.show_word_context()
-
 
     def move_cursor_to_word(self, index):
         model = index.model()
