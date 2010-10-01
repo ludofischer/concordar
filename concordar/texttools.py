@@ -35,7 +35,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
-
+        
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         palette = self.textBrowser.palette()
         palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('cyan'))
@@ -52,7 +52,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-
+        self.addToolBar(QtCore.Qt.RightToolBarArea, self.toolBar)
        
     def connect_slots(self):
         self.actionOpen.triggered.connect(self.choose_file)
