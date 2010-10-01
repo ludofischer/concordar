@@ -27,6 +27,11 @@ import models
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def __init__(self, parent=None):
         super(TextTools, self).__init__(parent)
+        self.construct_layout()
+        self.connect_slots()
+        self.setup_interactive_concordance()
+
+    def construct_layout(self):
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
@@ -46,13 +51,10 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-        self.actionOpen.triggered.connect(self.choose_file)
 
-        self.server = models.Server()
-        self.connect_slots()
-        self.setup_interactive_concordance()
-
+       
     def connect_slots(self):
+        self.actionOpen.triggered.connect(self.choose_file)
         self.textBrowser.cursorPositionChanged.connect(self.new_word_selected_in_text)
         self.radiusBox.valueChanged.connect(self.update_concordance)
         self.wordField.textEdited.connect(self.new_word_typed)
@@ -62,6 +64,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
+        self.server = models.Server()
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
