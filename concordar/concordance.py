@@ -1,47 +1,59 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
+from PyQt4 import QtGui
+
 
 def lowercase_extractor(word):
     def configured_extractor(match):
         return match.lower() == word.lower()
     return configured_extractor
 
-def build_list(text):
-    import re
-    from future_builtins import filter
-    return tuple(filter(lambda x: x!= '', re.compile('\W', re.UNICODE).split(text)))
-
-
 def numerize(sequence):
     from future_builtins import zip
     return zip(range(len(sequence)), sequence)
 
-def positions(sequence, word, criterion_definition=lowercase_extractor):
-    matches_criterion = criterion_definition(word)
-    for (position, thing) in numerize(sequence):
-        if matches_criterion(thing):
-            yield position
-    
-def build_ranges(iterable, width, maximum):
-    for number in iterable:
-        if number - width < 0:
-            start = 0
-        else:
-            start = number - width
-
-        if number + width + 1 > maximum:
-            end = maximum
-        else:
-            end = number + width + 1
-        yield (number, (start, end))
+def search_sequence(sequence, word, width):
+   for result in build_results(get_word_groups(sequence, symmetric_ranges(positions(sequence, word), width, len(sequence)))):
+      yield result
+      
+def build_results(sequence):
+   for coord, match in sequence:
+      words = [item[1] for item in match]
+      yield (coord, ' '.join(words))
 
 def get_word_groups(sequence, ranges):
     from itertools import islice
-    for position, group in ranges:
-        yield (position, islice(sequence, *group))
+    for coord, start, end in ranges:
+        yield (coord, sequence[start:end])
 
-    
-def search_sequence(sequence, word, width):
-    for position, match in get_word_groups(sequence, build_ranges(positions(sequence, word),width, len(sequence))):
-        yield (position, ' '.join(match))
+def symmetric_ranges(iterable, width, maximum):
+    for index, coord in iterable:
+        if index - width < 0:
+            start = 0
+        else:
+            start = index - width
+
+        if index + width + 1 > maximum:
+            end = maximum
+        else:
+            end = index + width + 1
+        yield (coord, start, end)
+
+def positions(sequence, word, criterion_definition=lowercase_extractor):
+    matches_criterion = criterion_definition(word)
+    for (index, (coord, thing)) in numerize(sequence):
+        if matches_criterion(thing):
+            yield (index, coord)
+
+def import_file(text):
+   def generate_list(text):
+      doc = QtGui.QTextDocument(text)
+      cursor = QtGui.QTextCursor(doc)
+      cursor.select(QtGui.QTextCursor.WordUnderCursor)
+      yield (cursor.position(), cursor.selectedText())
+      while cursor.movePosition(QtGui.QTextCursor.NextWord):
+         cursor.select(QtGui.QTextCursor.WordUnderCursor)
+         yield (cursor.position(), cursor.selectedText())
+   
+   return tuple(generate_list(text))
+
