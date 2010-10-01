@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Name="Concordar" Id="{901E31C1-2476-4919-B37C-544CD111E621}" UpgradeCode="{77C01D50-8E3E-4C3B-8D56-EA5703C3E37A}"
   Language="1033" Codepage="1252" Version="0.1.2"
@@ -16,8 +16,8 @@
 		   <Component Id="MainExecutable" Guid="{68BC9779-07D8-4A64-BD7B-93818C3248BF}">
               <File Id="MainEXE" Name="concordar.exe" Source="main.exe"
               KeyPath="yes">
-				<Shortcut Id="startMenuConcordar" Directory="ProgramMenuDir" Advertise="yes" Name="Concordar 0.1.2" />
-				<Shortcut Id="desktopConcordar" Directory="DesktopFolder" Advertise="yes" Name="Concordar 0.1.2" />
+				<Shortcut Id="startMenuConcordar" Directory="ProgramMenuDir" Advertise="yes" Name="Concordar" />
+				<Shortcut Id="desktopConcordar" Directory="DesktopFolder" Advertise="yes" Name="Concordar" />
 			  </File>
             </Component>
 
