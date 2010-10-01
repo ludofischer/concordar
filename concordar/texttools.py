@@ -36,6 +36,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
 
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         palette = self.textBrowser.palette()
         palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('cyan'))
         palette.setColor(QtGui.QPalette.HighlightedText, QtGui.QColor('black'))
@@ -65,6 +66,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
         self.server = models.Server()
+        self.text = self.textBrowser.toPlainText()
+        self.tokenized = self.server.basic_tokenize(self.text)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
@@ -78,7 +81,6 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.prepare_browser()
 
     def prepare_browser(self):
-        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(self.text)
         self.textBrowser.blockSignals(False)
