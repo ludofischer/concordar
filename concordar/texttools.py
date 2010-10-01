@@ -65,9 +65,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
-        self.server = models.Server()
+        self.server = models.BasicConcordanceServer()
         self.text = self.textBrowser.toPlainText()
-        self.tokenized = self.server.basic_tokenize(self.text)
+        self.tokenized = self.server.tokenize(self.text)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
@@ -77,7 +77,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
         self.text = text
-        self.tokenized = self.server.basic_tokenize(text)
+        self.tokenized = self.server.tokenize(text)
         self.prepare_browser()
 
     def prepare_browser(self):
@@ -121,5 +121,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
+        self.concordanceModel.set_matches(self.server.concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
 

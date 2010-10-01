@@ -21,9 +21,9 @@ class ModelsTest(unittest.TestCase):
         
 
     def test_server_concordance(self):
-        server = models.Server()
-        result = server.basic_tokenize('Love is in the air')
+        server = models.BasicConcordanceServer()
+        result = server.tokenize('Love is in the air')
         self.assertEqual(result, ((4, 'Love'),(7, 'is'),(10, 'in'), (14, 'the'), (18, 'air')))
-        result = server.give_basic_concordance('Love is in the air', 'in', 1, result)        
+        result = server.concordance('Love is in the air', 'in', 1, result)        
 
         
