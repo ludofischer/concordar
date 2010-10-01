@@ -74,6 +74,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
         self.text = text
+        self.tokenized = self.server.basic_tokenize(text)
         self.prepare_browser()
 
     def prepare_browser(self):
@@ -118,5 +119,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value()))
+        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
 

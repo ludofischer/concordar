@@ -20,7 +20,10 @@ class ModelsTest(unittest.TestCase):
         self.assertEqual('il tonno è', model.data(model_index))
         
 
-    def test_server(self):
+    def test_server_concordance(self):
         server = models.Server()
-        result = server.give_basic_concordance('Love is in the air', 'in', 1)
+        result = server.basic_tokenize('Love is in the air')
+        self.assertEqual(result, ((4, 'Love'),(7, 'is'),(10, 'in'), (14, 'the'), (18, 'air')))
+        result = server.give_basic_concordance('Love is in the air', 'in', 1, result)        
+
         
