@@ -52,7 +52,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-        self.addToolBar(QtCore.Qt.RightToolBarArea, self.toolBar)
+        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.toolBar)
        
     def connect_slots(self):
         self.actionOpen.triggered.connect(self.choose_file)
