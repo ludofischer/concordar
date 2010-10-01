@@ -35,9 +35,10 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
-
+        
+        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         palette = self.textBrowser.palette()
-        palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('deepskyblue'))
+        palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('cyan'))
         palette.setColor(QtGui.QPalette.HighlightedText, QtGui.QColor('black'))
         self.textBrowser.setPalette(palette)
         self.radiusBox = QtGui.QSpinBox()
@@ -51,7 +52,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-
+        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.toolBar)
        
     def connect_slots(self):
         self.actionOpen.triggered.connect(self.choose_file)
@@ -64,7 +65,9 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
-        self.server = models.Server()
+        self.server = models.BasicConcordanceServer()
+        self.text = self.textBrowser.toPlainText()
+        self.tokenized = self.server.tokenize(self.text)
 
     def choose_file(self):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
@@ -74,11 +77,10 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         with open(text_file, 'r') as f:
             text = f.read().decode('utf-8')
         self.text = text
-        self.tokenized = self.server.basic_tokenize(text)
+        self.tokenized = self.server.tokenize(text)
         self.prepare_browser()
 
     def prepare_browser(self):
-        self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
         self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(self.text)
         self.textBrowser.blockSignals(False)
@@ -121,5 +123,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.give_basic_concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
+        self.concordanceModel.set_matches(self.server.concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
 

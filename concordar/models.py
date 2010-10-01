@@ -3,17 +3,13 @@
 from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 import concordance
-import alternate
 
-class Server(object):
-    def __init__(self):
-        self.tokenized = None
+class BasicConcordanceServer(object):
+    def concordance(self, text, word, radius, tokenized):
+        return tuple(concordance.search_sequence(tokenized, word, radius))
 
-    def give_basic_concordance(self, text, word, radius, tokenized):
-        return tuple(alternate.search_sequence(tokenized, word, radius))
-
-    def basic_tokenize(self, text):
-        return alternate.import_file(text)
+    def tokenize(self, text):
+        return concordance.import_file(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
     def __init__(self, matches=tuple(), parent=None):
