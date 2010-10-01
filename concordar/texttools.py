@@ -37,7 +37,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
 
         palette = self.textBrowser.palette()
-        palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('deepskyblue'))
+        palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('cyan'))
         palette.setColor(QtGui.QPalette.HighlightedText, QtGui.QColor('black'))
         self.textBrowser.setPalette(palette)
         self.radiusBox = QtGui.QSpinBox()
