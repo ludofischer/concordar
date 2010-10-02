@@ -8,25 +8,21 @@ def lowercase_extractor(word):
         return match.lower() == word.lower()
     return configured_extractor
 
-def numerize(sequence):
-    from future_builtins import zip
-    return zip(range(len(sequence)), sequence)
-
 def search_sequence(sequence, word, width):
-   for result in build_results(get_word_groups(sequence, symmetric_ranges(positions(sequence, word), width, len(sequence)))):
+   for result in build_results(sequence, symmetric_ranges(positions(sequence, word), width, len(sequence))):
       yield result
       
-def build_results(sequence):
-   for coord, match in sequence:
-      words = [item[1] for item in match]
-      yield (coord, ' '.join(words))
+def build_results(sequence, ranges):
+   for index, start, end in ranges:
+      words = [item[1] for item in sequence[start:end]]
+      yield (sequence[index][0], ' '.join(words))
 
 def get_word_groups(sequence, ranges):
-    for coord, start, end in ranges:
-        yield (coord, sequence[start:end])
+    for index, start, end in ranges:
+        yield (index, sequence[start:end])
 
 def symmetric_ranges(iterable, width, maximum):
-    for index, coord in iterable:
+    for index in iterable:
         if index - width < 0:
             start = 0
         else:
@@ -36,10 +32,15 @@ def symmetric_ranges(iterable, width, maximum):
             end = maximum
         else:
             end = index + width + 1
-        yield (coord, start, end)
+        yield (index, start, end)
 
 def positions(sequence, word, criterion_definition=lowercase_extractor):
     matches_criterion = criterion_definition(word)
     for (index, (coord, thing)) in numerize(sequence):
         if matches_criterion(thing):
-            yield (index, coord)
+            yield index
+
+
+def numerize(sequence):
+    from future_builtins import zip
+    return zip(range(len(sequence)), sequence)
