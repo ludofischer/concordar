@@ -22,7 +22,6 @@ def build_results(sequence):
       yield (coord, ' '.join(words))
 
 def get_word_groups(sequence, ranges):
-    from itertools import islice
     for coord, start, end in ranges:
         yield (coord, sequence[start:end])
 
