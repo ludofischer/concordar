@@ -22,4 +22,6 @@ private slots:
   
 private:
   QString Word;
+  std::vector<QString> tokens;
+  std::vector<int> positions;x
 };
