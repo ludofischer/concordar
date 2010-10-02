@@ -121,5 +121,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
+        self.concordanceModel.set_matches(self.server.concordance(self.word, self.radiusBox.value(), self.tokenized ))
 

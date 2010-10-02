@@ -5,7 +5,7 @@ from PyQt4 import QtCore, QtGui
 import concordance, importers
 
 class BasicConcordanceServer(object):
-    def concordance(self, text, word, radius, tokenized):
+    def concordance(self, word, radius, tokenized):
         return tuple(concordance.search_sequence(tokenized, word, radius))
 
     def tokenize(self, text):
