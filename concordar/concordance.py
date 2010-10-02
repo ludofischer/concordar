@@ -17,10 +17,6 @@ def build_results(sequence, ranges):
       words = [item[1] for item in sequence[start:end]]
       yield (sequence[index][0], ' '.join(words))
 
-def get_word_groups(sequence, ranges):
-    for index, start, end in ranges:
-        yield (index, sequence[start:end])
-
 def symmetric_ranges(iterable, width, maximum):
     for index in iterable:
         if index - width < 0:
