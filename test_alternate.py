@@ -4,17 +4,32 @@ sip.setapi('QVariant', 2)
 sip.setapi('QString', 2)
 
 import unittest2
-from concordar import concordance
+from concordar import concordance, importers
 
 
 class AlternateTest(unittest2.TestCase):
     def setUp(self):
         self.text = 'La capra canta'
-        self.sequence = concordance.import_file(self.text)
+        self.sequence = importers.import_file(self.text)
 
     def test_import(self):
-        result = concordance.import_file(self.text)
-        self.assertEqual(result, ((2,'La'), (8,'capra'), (14,'canta')))
+        self.assertEqual(self.sequence, ((2,'La'), (8,'capra'), (14,'canta')))
+
+    def test_lowercase(self):
+        extractor = concordance.lowercase_extractor('terror')
+        self.assertTrue(extractor('Terror'))
+        self.assertTrue(extractor('terror'))
+        self.assertFalse(extractor('sunday'))
+        
+        extractor = concordance.lowercase_extractor('Terrier')
+        self.assertTrue(extractor('terrier'))
+
+    def test_numerize(self):
+        result = concordance.numerize(('dog', 'cat', 'fern'))
+        self.assertEqual(result.next(), (0, 'dog'))
+        self.assertEqual(result.next(), (1, 'cat'))
+        self.assertEqual(result.next(), (2, 'fern'))
+
    
     def test_positions(self):
         result = concordance.positions(self.sequence, 'capra')

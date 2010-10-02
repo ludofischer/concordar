@@ -44,16 +44,3 @@ def positions(sequence, word, criterion_definition=lowercase_extractor):
     for (index, (coord, thing)) in numerize(sequence):
         if matches_criterion(thing):
             yield (index, coord)
-
-def import_file(text):
-   def generate_list(text):
-      doc = QtGui.QTextDocument(text)
-      cursor = QtGui.QTextCursor(doc)
-      cursor.select(QtGui.QTextCursor.WordUnderCursor)
-      yield (cursor.position(), cursor.selectedText())
-      while cursor.movePosition(QtGui.QTextCursor.NextWord):
-         cursor.select(QtGui.QTextCursor.WordUnderCursor)
-         yield (cursor.position(), cursor.selectedText())
-   
-   return tuple(generate_list(text))
-
