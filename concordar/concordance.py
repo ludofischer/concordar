@@ -14,8 +14,8 @@ def search_sequence(sequence, word, width):
       
 def build_results(sequence, ranges):
    for index, start, end in ranges:
-      words = [item[1] for item in sequence[start:end]]
-      yield (sequence[index][0], ' '.join(words))
+      words = [item[2] for item in sequence[start:end]]
+      yield (sequence[index][1], ' '.join(words))
 
 def symmetric_ranges(iterable, width, maximum):
     for index in iterable:
@@ -32,11 +32,7 @@ def symmetric_ranges(iterable, width, maximum):
 
 def positions(sequence, word, criterion_definition=lowercase_extractor):
     matches_criterion = criterion_definition(word)
-    for (index, (coord, thing)) in numerize(sequence):
+    for (index, coord, thing) in sequence:
         if matches_criterion(thing):
             yield index
 
-
-def numerize(sequence):
-    from future_builtins import zip
-    return zip(range(len(sequence)), sequence)
