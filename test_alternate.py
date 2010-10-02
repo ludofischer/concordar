@@ -44,3 +44,13 @@ class AlternateTest(unittest2.TestCase):
         self.assertEqual(result.next(), (8, 'La capra canta'))
 
 
+    def test_symmetric_ranges(self):
+        result = concordance.symmetric_ranges((0,1,2,3,4), 2, 5)
+        self.assertEqual(result.next(), (0,(0,3)))
+        self.assertEqual(result.next(), (1,(0,4)))
+        self.assertEqual(result.next(), (2,(0,5)))
+        self.assertEqual(result.next(), (3,(1,5)))
+        self.assertEqual(result.next(), (4,(2,5)))
+        self.assertRaises(StopIteration, result.next)
+
+
