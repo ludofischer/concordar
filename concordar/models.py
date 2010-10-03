@@ -13,7 +13,7 @@ class BasicConcordanceServer(object):
 
     def tokenize(self, text):
         """Returns non-punctuation, whitespace-separated tokens."""
-        return importers.import_file(text)
+        return importers.graphical_tokenize(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
     def __init__(self, matches=tuple(), parent=None):

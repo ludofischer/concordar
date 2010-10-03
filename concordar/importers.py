@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 
 from PyQt4 import QtGui
 
-def import_file(text):
+def graphical_tokenize(text):
+   """Tokenizes the text using the document cursor."""
+
    def generate_list(text):
       doc = QtGui.QTextDocument(text)
       cursor = QtGui.QTextCursor(doc)
