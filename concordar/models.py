@@ -5,10 +5,14 @@ from PyQt4 import QtCore
 import concordance, importers
 
 class BasicConcordanceServer(object):
+    """A façade for algorithms implementing a basic concordance."""
+    
     def concordance(self, word, radius, tokenized):
+        """Returns a concordance for a single word to the server."""
         return tuple(concordance.search_sequence(tokenized, word, radius))
 
     def tokenize(self, text):
+        """Returns non-punctuation, whitespace-separated tokens."""
         return importers.import_file(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
@@ -29,6 +33,7 @@ class ConcordanceModel(QtCore.QAbstractTableModel):
             return None
 
     def set_matches(self, matches):
+        """Sets the list of passages to show the user."""
         self.beginResetModel()
         self.matches = matches
         self.endResetModel()
