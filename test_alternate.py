@@ -13,30 +13,23 @@ class AlternateTest(unittest2.TestCase):
         self.sequence = importers.import_file(self.text)
 
     def test_import(self):
-        self.assertEqual(self.sequence, ((2,'La'), (8,'capra'), (14,'canta')))
+        self.assertEqual(self.sequence, ((0,2,'La'), (1, 8,'capra'), (2, 14,'canta')))
 
     def test_lowercase(self):
         extractor = concordance.lowercase_extractor('terror')
-        self.assertTrue(extractor('Terror'))
-        self.assertTrue(extractor('terror'))
-        self.assertFalse(extractor('sunday'))
+        self.assertEqual(1,extractor(1,'Terror'))
+        self.assertEqual(1,extractor(1, 'terror'))
+        self.assertFalse(extractor(1, 'sunday'))
         
         extractor = concordance.lowercase_extractor('Terrier')
-        self.assertTrue(extractor('terrier'))
+        self.assertEqual(1, extractor(1, 'terrier'))
 
-    def test_numerize(self):
-        result = concordance.numerize(('dog', 'cat', 'fern'))
-        self.assertEqual(result.next(), (0, 'dog'))
-        self.assertEqual(result.next(), (1, 'cat'))
-        self.assertEqual(result.next(), (2, 'fern'))
-
-   
     def test_positions(self):
         result = concordance.positions(self.sequence, 'capra')
-        self.assertEqual(result.next(), (1,8))
+        self.assertEqual(result[0], (1,8))
         
     def test_word_groups(self):
-        result = concordance.get_word_groups(self.sequence, ((0,0,2),(1,1,2)))
+        result = concordance.build_results(self.sequence, ((0,0,2),(1,1,2)))
         self.assertEqual(result.next(), (0, ((2,'La',), (8, 'capra')))) 
 
     def test_all(self):
