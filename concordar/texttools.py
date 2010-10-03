@@ -73,8 +73,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
         self.change_working_file(text_file)
 
-    def change_working_file(self, text_file):
-        with open(text_file, 'r') as f:
+    def change_working_file(self, filename):
+        with open(filename, 'r') as f:
             text = f.read().decode('utf-8')
         self.text = text
         self.tokenized = self.server.tokenize(text)
@@ -123,5 +123,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.concordance(self.text, self.word, self.radiusBox.value(), self.tokenized ))
+        self.concordanceModel.set_matches(self.server.concordance(self.word, self.radiusBox.value(), self.tokenized ))
 

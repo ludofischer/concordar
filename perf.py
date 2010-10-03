@@ -2,13 +2,13 @@ from __future__ import unicode_literals
 import sip
 sip.setapi('QString', 2)
 sip.setapi('QVariant', 2)
-import alternate
+from concordar import importers
 
-with open('../samples/moby_dick.txt', 'r') as f:
+with open('samples/moby_dick.txt', 'r') as f:
     text = f.read()
 
-sequence = alternate.import_file(text)
-
+sequence = importers.import_file(text)
+"""
 positions = tuple(alternate.positions(sequence, 'the'))
 
 ranges = tuple(alternate.build_ranges(positions, 1, len(positions)))
@@ -27,3 +27,4 @@ def search(thing):
         yield(coord, ' '.join(words))
 
 searched = tuple(search(word_groups))
+"""

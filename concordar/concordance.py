@@ -4,30 +4,23 @@ from PyQt4 import QtGui
 
 
 def lowercase_extractor(word):
-    def configured_extractor(match):
-        return match.lower() == word.lower()
+    def configured_extractor(index, match):
+        if match.lower() == word.lower():
+            return index
+
     return configured_extractor
 
-def numerize(sequence):
-    from future_builtins import zip
-    return zip(range(len(sequence)), sequence)
-
 def search_sequence(sequence, word, width):
-   for result in build_results(get_word_groups(sequence, symmetric_ranges(positions(sequence, word), width, len(sequence)))):
+   for result in build_results(sequence, symmetric_ranges(positions(sequence, word), width, len(sequence))):
       yield result
       
-def build_results(sequence):
-   for coord, match in sequence:
-      words = [item[1] for item in match]
-      yield (coord, ' '.join(words))
-
-def get_word_groups(sequence, ranges):
-    from itertools import islice
-    for coord, start, end in ranges:
-        yield (coord, sequence[start:end])
+def build_results(sequence, ranges):
+   for index, start, end in ranges:
+      words = [item[2] for item in sequence[start:end]]
+      yield (sequence[index][1], ' '.join(words))
 
 def symmetric_ranges(iterable, width, maximum):
-    for index, coord in iterable:
+    for index in iterable:
         if index - width < 0:
             start = 0
         else:
@@ -37,23 +30,10 @@ def symmetric_ranges(iterable, width, maximum):
             end = maximum
         else:
             end = index + width + 1
-        yield (coord, start, end)
+        yield (index, start, end)
 
 def positions(sequence, word, criterion_definition=lowercase_extractor):
     matches_criterion = criterion_definition(word)
-    for (index, (coord, thing)) in numerize(sequence):
-        if matches_criterion(thing):
-            yield (index, coord)
-
-def import_file(text):
-   def generate_list(text):
-      doc = QtGui.QTextDocument(text)
-      cursor = QtGui.QTextCursor(doc)
-      cursor.select(QtGui.QTextCursor.WordUnderCursor)
-      yield (cursor.position(), cursor.selectedText())
-      while cursor.movePosition(QtGui.QTextCursor.NextWord):
-         cursor.select(QtGui.QTextCursor.WordUnderCursor)
-         yield (cursor.position(), cursor.selectedText())
-   
-   return tuple(generate_list(text))
+    return filter(lambda x: x is not None, [matches_criterion(index, thing) for (index, coord, thing) in sequence])
+       
 
