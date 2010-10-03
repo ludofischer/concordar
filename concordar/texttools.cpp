@@ -1,4 +1,4 @@
-#include <QWidget>
+#include <QMainWindow>
 #include <QString>
 #include <QModelIndex>
 #include <QTextCursor>
@@ -6,7 +6,7 @@
 #include "ui_main_window.h"
 #include "texttools.h"
 
-TextTools::TextTools(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow)  {
+TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)  {
   
   ui->setupUi(this);
   ui->actionQuit->setShortcut(QKeySequence::Quit);
@@ -40,4 +40,7 @@ void TextTools::build_for_typed_word(const QString& word)  {
 }
 
 void TextTools::show_occurrence_context(QModelIndex&){
+}
+
+void TextTools::update_concordance() {
 }

@@ -7,7 +7,7 @@
 #include <QModelIndex>
 #include "ui_main_window.h"
 
-class TextTools : public QWidget {
+class TextTools : public QMainWindow {
   
   Q_OBJECT
 
