@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 import concordance, importers
 
 class BasicConcordanceServer(object):
