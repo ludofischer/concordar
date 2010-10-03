@@ -30,7 +30,7 @@ class AlternateTest(unittest2.TestCase):
         
     def test_build_results(self):
         result = concordance.build_results(self.sequence, ((0,0,2),(1,1,2)))
-        self.assertEqual(result.next(), ((2,'La capra',), (8, 'capra'))) 
+        self.assertEqual(result.next(), (2,'La capra',)) 
 
     def test_all(self):
         result = concordance.search_sequence(self.sequence, 'capra', 1)
