@@ -34,6 +34,6 @@ def symmetric_ranges(iterable, width, maximum):
 
 def positions(sequence, word, criterion_definition=lowercase_extractor):
     matches_criterion = criterion_definition(word)
-    return [matches_criterion(index, thing) for (index, coord, thing) in sequence]
+    return filter(lambda x: x is not None, [matches_criterion(index, thing) for (index, coord, thing) in sequence])
        
 

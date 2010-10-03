@@ -26,11 +26,11 @@ class AlternateTest(unittest2.TestCase):
 
     def test_positions(self):
         result = concordance.positions(self.sequence, 'capra')
-        self.assertEqual(result[0], (1,8))
+        self.assertEqual(result[0], 1)
         
-    def test_word_groups(self):
+    def test_build_results(self):
         result = concordance.build_results(self.sequence, ((0,0,2),(1,1,2)))
-        self.assertEqual(result.next(), (0, ((2,'La',), (8, 'capra')))) 
+        self.assertEqual(result.next(), ((2,'La capra',), (8, 'capra'))) 
 
     def test_all(self):
         result = concordance.search_sequence(self.sequence, 'capra', 1)
@@ -39,11 +39,11 @@ class AlternateTest(unittest2.TestCase):
 
     def test_symmetric_ranges(self):
         result = concordance.symmetric_ranges((0,1,2,3,4), 2, 5)
-        self.assertEqual(result.next(), (0,(0,3)))
-        self.assertEqual(result.next(), (1,(0,4)))
-        self.assertEqual(result.next(), (2,(0,5)))
-        self.assertEqual(result.next(), (3,(1,5)))
-        self.assertEqual(result.next(), (4,(2,5)))
+        self.assertEqual(result.next(), (0,0,3))
+        self.assertEqual(result.next(), (1,0,4))
+        self.assertEqual(result.next(), (2,0,5))
+        self.assertEqual(result.next(), (3,1,5))
+        self.assertEqual(result.next(), (4,2,5))
         self.assertRaises(StopIteration, result.next)
 
 
