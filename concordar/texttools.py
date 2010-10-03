@@ -25,6 +25,8 @@ import ui_main_window
 import models
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
+    """The main appication."""
+
     def __init__(self, parent=None):
         super(TextTools, self).__init__(parent)
         self.construct_layout()
@@ -32,6 +34,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.setup_interactive_concordance()
 
     def construct_layout(self):
+        """Builds the UI."""
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
@@ -59,6 +62,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
     def setup_interactive_concordance(self):
+        """Creates the plumbing necessary to use basic concordances."""
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
@@ -67,10 +71,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.tokenized = self.server.tokenize(self.text)
 
     def choose_file(self):
+        """Makes the user choose a file to study from disk."""
         text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
         self.change_working_file(text_file)
 
     def change_working_file(self, filename):
+        """Replaces the current text with the contents of the user-supplied file."""
         with open(filename, 'r') as f:
             text = f.read().decode('utf-8')
         self.text = text
@@ -78,11 +84,13 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.prepare_browser()
 
     def prepare_browser(self):
+        """Shows the imported text in itw window."""
         self.textBrowser.blockSignals(True)
         self.textBrowser.setPlainText(self.text)
         self.textBrowser.blockSignals(False)
 
     def move_cursor_to_word(self, index):
+        """Show an occurence in its complete context."""
         model = index.model()
         word_position = model.data(model.index(index.row(), 0))
        
@@ -98,6 +106,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.blockSignals(False)
 
     def new_word_selected_in_text(self):
+        """Creates a concordance for the word the user clicked."""
         current_cursor = self.textBrowser.textCursor()
         current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
         self.highlight_selected_word(current_cursor)
@@ -106,10 +115,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.update_concordance()
 
     def new_word_typed(self, word):
+        """Creates a concordance for the word typed in by the user."""
         self.word = word
         self.update_concordance()
 
     def highlight_selected_word(self, cursor):
+        """Highlights the word the concordance is being built for."""
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
         selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))

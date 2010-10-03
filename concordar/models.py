@@ -16,6 +16,8 @@ class BasicConcordanceServer(object):
         return importers.graphical_tokenize(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
+    """A generated concordance."""
+
     def __init__(self, matches=tuple(), parent=None):
         QtCore.QAbstractTableModel.__init__(self, parent)
         self.matches = matches
