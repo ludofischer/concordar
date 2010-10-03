@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 import concordance, importers
 
 class BasicConcordanceServer(object):
+    """A façade for algorithms implementing a basic concordance."""
+    
     def concordance(self, word, radius, tokenized):
+        """Returns a concordance for a single word to the server."""
         return tuple(concordance.search_sequence(tokenized, word, radius))
 
     def tokenize(self, text):
-        return importers.import_file(text)
+        """Returns non-punctuation, whitespace-separated tokens."""
+        return importers.graphical_tokenize(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
+    """A generated concordance."""
+
     def __init__(self, matches=tuple(), parent=None):
         QtCore.QAbstractTableModel.__init__(self, parent)
         self.matches = matches
@@ -29,6 +35,7 @@ class ConcordanceModel(QtCore.QAbstractTableModel):
             return None
 
     def set_matches(self, matches):
+        """Sets the list of passages to show the user."""
         self.beginResetModel()
         self.matches = matches
         self.endResetModel()

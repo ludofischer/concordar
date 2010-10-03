@@ -10,7 +10,7 @@ from concordar import concordance, importers
 class AlternateTest(unittest2.TestCase):
     def setUp(self):
         self.text = 'La capra canta'
-        self.sequence = importers.import_file(self.text)
+        self.sequence = importers.graphical_tokenize(self.text)
 
     def test_import(self):
         self.assertEqual(self.sequence, ((0,2,'La'), (1, 8,'capra'), (2, 14,'canta')))
