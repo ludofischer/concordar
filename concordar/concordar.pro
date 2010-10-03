@@ -8,6 +8,6 @@ DEPENDPATH += . test
 INCLUDEPATH += .
 
 # Input
-HEADERS += texttools.h
+HEADERS += texttools.h cache.h server.h
 FORMS += main_window.ui
-SOURCES += texttools.cpp test/main.cpp
+SOURCES += texttools.cpp cache.cpp server.cpp main.cpp
