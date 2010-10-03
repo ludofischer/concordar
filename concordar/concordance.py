@@ -4,8 +4,10 @@ from PyQt4 import QtGui
 
 
 def lowercase_extractor(word):
-    def configured_extractor(match):
-        return match.lower() == word.lower()
+    def configured_extractor(index, match):
+        if match.lower() == word.lower():
+            return index
+
     return configured_extractor
 
 def search_sequence(sequence, word, width):
@@ -32,7 +34,6 @@ def symmetric_ranges(iterable, width, maximum):
 
 def positions(sequence, word, criterion_definition=lowercase_extractor):
     matches_criterion = criterion_definition(word)
-    for (index, coord, thing) in sequence:
-        if matches_criterion(thing):
-            yield index
+    return [matches_criterion(index, thing) for (index, coord, thing) in sequence]
+       
 
