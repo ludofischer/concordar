@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Build your concordance</string>
+   <string notr="true">Concordar</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
