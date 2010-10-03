@@ -8,10 +8,10 @@ setup(
     author='Ludovico Fischer',
     author_email='livrerie@gmail.com',
     url='http://github.com/ludovicofischer/concordar',
-    package_dir={'': 'concordar'},
-    py_modules=['concordance', 'texttools','ui_main_window', 'models'],
+    packages=['concordar',],
     scripts=['concordar.py'],
-    requires=['PyQt4',]
+    requires=['PyQt4',],
+    classifiers=['Intended Audience :: End Users/Desktop',]
 )
     
     
