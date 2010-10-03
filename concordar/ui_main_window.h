@@ -7,8 +7,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+#ifndef UI_MAIN_WINDOW_H
+#define UI_MAIN_WINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -16,7 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
-#include <QtGui/QListWidget>
+#include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -38,7 +38,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter;
     QPlainTextEdit *textBrowser;
-    QListWidget *matchesView;
+    QListView *matchesView;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -49,6 +49,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(740, 517);
+        MainWindow->setWindowTitle(QString::fromUtf8("Concordar"));
         MainWindow->setUnifiedTitleAndToolBarOnMac(true);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
@@ -75,7 +76,7 @@ public:
         textBrowser->setReadOnly(true);
         textBrowser->setPlainText(QString::fromUtf8("Select File > Open to choose the text you want to study."));
         splitter->addWidget(textBrowser);
-        matchesView = new QListWidget(splitter);
+        matchesView = new QListView(splitter);
         matchesView->setObjectName(QString::fromUtf8("matchesView"));
         sizePolicy.setHeightForWidth(matchesView->sizePolicy().hasHeightForWidth());
         matchesView->setSizePolicy(sizePolicy);
@@ -110,12 +111,12 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Build your concordance", 0, QApplication::UnicodeUTF8));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0, QApplication::UnicodeUTF8));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", 0, QApplication::UnicodeUTF8));
         actionFind->setText(QApplication::translate("MainWindow", "Find", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0, QApplication::UnicodeUTF8));
+        Q_UNUSED(MainWindow);
     } // retranslateUi
 
 };
@@ -126,4 +127,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAIN_WINDOW_H
+#endif // UI_MAIN_WINDOW_H
