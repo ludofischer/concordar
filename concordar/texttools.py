@@ -22,66 +22,111 @@ from __future__ import unicode_literals
 from PyQt4 import QtCore, QtGui
 
 import ui_main_window
-
+import models
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
+    """The main appication."""
+
     def __init__(self, parent=None):
         super(TextTools, self).__init__(parent)
+        self.construct_layout()
+        self.connect_slots()
+        self.setup_interactive_concordance()
+
+    def construct_layout(self):
+        """Builds the UI."""
         self.setupUi(self)
         self.actionQuit.setShortcut(QtGui.QKeySequence.Quit)
         self.actionOpen.setShortcut(QtGui.QKeySequence.Open)
+        
         self.textBrowser.viewport().setCursor(QtCore.Qt.PointingHandCursor)
-
+        palette = self.textBrowser.palette()
+        palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor('cyan'))
+        palette.setColor(QtGui.QPalette.HighlightedText, QtGui.QColor('black'))
+        self.textBrowser.setPalette(palette)
         self.radiusBox = QtGui.QSpinBox()
         self.radiusBox.setMinimum(1)
         self.wordField = QtGui.QLineEdit()
         self.wordField.setMaximumWidth(200)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Word:')))
         self.toolBar.addWidget(self.wordField)
-        spacer = QtGui.QWidget(self)
-        spacer.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
-        self.toolBar.addWidget(spacer)
         self.toolBar.addWidget(QtGui.QLabel(self.tr('Context size:')))
         self.toolBar.addWidget(self.radiusBox)
-
+        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.toolBar)
+       
+    def connect_slots(self):
         self.actionOpen.triggered.connect(self.choose_file)
-        self.textBrowser.cursorPositionChanged.connect(self.update_from_text)
-        self.radiusBox.valueChanged.connect(self.update_from_text)
-        self.wordField.textEdited.connect(self.show_word_context)
+        self.textBrowser.cursorPositionChanged.connect(self.new_word_selected_in_text)
+        self.radiusBox.valueChanged.connect(self.update_concordance)
+        self.wordField.textEdited.connect(self.new_word_typed)
+        self.matchesView.clicked.connect(self.move_cursor_to_word)
+
+    def setup_interactive_concordance(self):
+        """Creates the plumbing necessary to use basic concordances."""
+        self.concordanceModel = models.ConcordanceModel()
+        self.matchesView.setModel(self.concordanceModel)
+        self.matchesView.setModelColumn(1)
+        self.server = models.BasicConcordanceServer()
+        self.text = self.textBrowser.toPlainText()
+        self.tokenized = self.server.tokenize(self.text)
 
     def choose_file(self):
-        text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'),'', self.tr('Text files (*.txt)'))
-        self.import_file(text_file)
+        """Makes the user choose a file to study from disk."""
+        text_file = QtGui.QFileDialog.getOpenFileName(self, self.tr('Choose file to import'), QtCore.QDir.homePath(), self.tr('Text files (*.txt)'))
+        self.change_working_file(text_file)
 
-    def import_file(self, text_file):
-        with open(text_file, 'r') as f:
+    def change_working_file(self, filename):
+        """Replaces the current text with the contents of the user-supplied file."""
+        with open(filename, 'r') as f:
             text = f.read().decode('utf-8')
+        self.text = text
+        self.tokenized = self.server.tokenize(text)
+        self.prepare_browser()
+
+    def prepare_browser(self):
+        """Shows the imported text in itw window."""
         self.textBrowser.blockSignals(True)
-        self.textBrowser.setPlainText(text)
+        self.textBrowser.setPlainText(self.text)
         self.textBrowser.blockSignals(False)
-        import concordance
-        self.content = concordance.build_list(text)
 
-    def show_word_context(self, word):
-        self.matchesView.clear()
-        import concordance
-        items = [match for match in concordance.search_sequence(self.content, word, self.radiusBox.value())]
-        self.matchesView.addItems(items)
+    def move_cursor_to_word(self, index):
+        """Show an occurence in its complete context."""
+        model = index.model()
+        word_position = model.data(model.index(index.row(), 0))
+       
+        cursor = self.textBrowser.textCursor()
+      
+        cursor.setPosition(word_position)
+        cursor.select(QtGui.QTextCursor.WordUnderCursor)
+       
+        self.textBrowser.blockSignals(True)
+        self.textBrowser.setTextCursor(cursor)
+        self.textBrowser.centerCursor()
+        
+        self.textBrowser.blockSignals(False)
 
-    def set_selection(self, current_cursor):
+    def new_word_selected_in_text(self):
+        """Creates a concordance for the word the user clicked."""
+        current_cursor = self.textBrowser.textCursor()
+        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        self.highlight_selected_word(current_cursor)
+        self.word = current_cursor.selectedText()
+        self.wordField.setText(self.word)
+        self.update_concordance()
+
+    def new_word_typed(self, word):
+        """Creates a concordance for the word typed in by the user."""
+        self.word = word
+        self.update_concordance()
+
+    def highlight_selected_word(self, cursor):
+        """Highlights the word the concordance is being built for."""
         extra_selection = QtGui.QTextEdit.ExtraSelection()
         selected_format = QtGui.QTextCharFormat()
         selected_format.setBackground(QtGui.QBrush(QtGui.QColor('yellow')))
         extra_selection.format = selected_format
-        extra_selection.cursor = current_cursor
+        extra_selection.cursor = cursor
         self.textBrowser.setExtraSelections((extra_selection,))
 
-
-    def update_from_text(self):
-        current_cursor = self.textBrowser.textCursor()
-        current_cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        word = current_cursor.selectedText()
-        self.show_word_context(word)
-        
-        self.wordField.setText(word)
-        self.set_selection(current_cursor)
+    def update_concordance(self):
+        self.concordanceModel.set_matches(self.server.concordance(self.word, self.radiusBox.value(), self.tokenized ))

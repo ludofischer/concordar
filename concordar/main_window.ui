@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Build your concordance</string>
+   <string notr="true">Concordar</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
@@ -40,7 +40,7 @@
         <string notr="true">Select File &gt; Open to choose the text you want to study.</string>
        </property>
       </widget>
-      <widget class="QListWidget" name="matchesView">
+      <widget class="QListView" name="matchesView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>

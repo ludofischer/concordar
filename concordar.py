@@ -26,7 +26,7 @@ sip.setapi('QString', 2)
 
 import sys
 from PyQt4 import QtGui
-from texttools import TextTools
+from concordar.texttools import TextTools
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
