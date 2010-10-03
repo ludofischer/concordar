@@ -6,8 +6,7 @@
 
 int main() {
   QString text = read_text("../../samples/moby_dick.txt");
-  std::vector<QString> tokens;
-  std::vector<int> converter;
-  tokenize(text, tokens, converter);
+  std::vector<Token> tokens;
+  tokenize(text, tokens);
   return 0;
 }

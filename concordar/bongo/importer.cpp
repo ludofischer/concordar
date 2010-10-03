@@ -2,21 +2,29 @@
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QString>
+#include "importer.h"
 
-
-void tokenize(const QString& text, std::vector<QString>& tokens, std::vector<int>& index_coord) {
+void tokenize(const QString& text, std::vector<Token>& tokens) {
   QTextDocument *doc = new QTextDocument(text);
   QTextCursor cursor(doc);
+  int index = 0;
 
   cursor.select(QTextCursor::WordUnderCursor);
-  tokens.push_back(cursor.selectedText());
-  index_coord.push_back(cursor.position());
-
+  Token token;
+  token.token = cursor.selectedText();
+  token.coordinate = cursor.position();
+  token.index = index;
+  ++index;
+  tokens.push_back(token);
   while (cursor.movePosition(QTextCursor::NextWord)) {
+    
     cursor.select(QTextCursor::WordUnderCursor);
-    tokens.push_back(cursor.selectedText());
-    index_coord.push_back(cursor.position());
-
+    Token token;
+    token.token = cursor.selectedText();
+    token.coordinate = cursor.position();
+    token.index = index;
+    ++index;
+    tokens.push_back(token);
   }
   delete doc;
 }

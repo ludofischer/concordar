@@ -4,6 +4,12 @@
 #include <vector>
 #include <QString>
 
-void tokenize(const QString&, std::vector<QString>&, std::vector<int>& coord);
+typedef struct {
+  QString token;
+  int coordinate;
+  int index;
+} Token;
+
+void tokenize(const QString&, std::vector<Token>&);
 
 #endif
