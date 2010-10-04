@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import  unicode_literals
-import unittest2 as unittest
+import unittest
 from concordar import models
 
 class ModelsTest(unittest.TestCase):

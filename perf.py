@@ -1,7 +1,3 @@
-from __future__ import unicode_literals
-import sip
-sip.setapi('QString', 2)
-sip.setapi('QVariant', 2)
 from concordar import importers
 
 with open('samples/moby_dick.txt', 'r') as f:

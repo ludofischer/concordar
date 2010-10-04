@@ -1,13 +1,8 @@
-from __future__ import unicode_literals
-import sip
-sip.setapi('QVariant', 2)
-sip.setapi('QString', 2)
-
-import unittest2
+import unittest
 from concordar import concordance, importers
 
 
-class AlternateTest(unittest2.TestCase):
+class AlternateTest(unittest.TestCase):
     def setUp(self):
         self.text = 'La capra canta'
         self.sequence = importers.graphical_tokenize(self.text)
