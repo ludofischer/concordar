@@ -17,8 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Concordance.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 from PyQt4 import QtCore, QtGui
 
 from . import ui_main_window
