@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 from PyQt4 import QtCore
-import concordance, importers
+from . import concordance, importers
 
 class BasicConcordanceServer(object):
     """A façade for algorithms implementing a basic concordance."""
