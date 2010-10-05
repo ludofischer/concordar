@@ -8,6 +8,7 @@ class Cache(object):
 
     def set_text(self, text):
         """Builds non-punctuation, whitespace-separated tokens."""
+        self.text = text
         tokenized = importers.graphical_tokenize(text)
         self.tokens = [item.token for item in tokenized]
         self.coords = [item.coord for item in tokenized]

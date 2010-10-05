@@ -64,11 +64,8 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
-        self.server = models.BasicConcordanceServer()
-        self.cache  = {'text': self.textBrowser.toPlainText(),}
-        tokenized = self.server.tokenize(self.cache['text'])
-        self.cache['tokens'] = [item.token for item in tokenized]
-        self.cache['coords'] = [item.coord for item in tokenized]
+        self.cache = models.Cache(self.textBrowser.toPlainText())
+        self.server = models.BasicConcordanceServer(self.cache)
 
     def choose_file(self):
         """Makes the user choose a file to study from disk."""
@@ -79,14 +76,13 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         """Replaces the current text with the contents of the user-supplied file."""
         with open(filename, 'r', encoding='utf-8') as f:
             text = f.read()
-        self.text = text
-        self.tokenized = self.server.tokenize(text)
+        self.cache.set_text(text)
         self.prepare_browser()
 
     def prepare_browser(self):
         """Shows the imported text in itw window."""
         self.textBrowser.blockSignals(True)
-        self.textBrowser.setPlainText(self.text)
+        self.textBrowser.setPlainText(self.cache.text)
         self.textBrowser.blockSignals(False)
 
     def move_cursor_to_word(self, index):
