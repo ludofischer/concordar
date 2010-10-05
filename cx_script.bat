@@ -1,1 +1,1 @@
-C:\Python27\Scripts\cxfreeze concordar\main.py --target-dir bin -c --base Win32GUI
+C:\Python31\Scripts\cxfreeze concordar\main.py --target-dir bin -c --base Win32GUI
