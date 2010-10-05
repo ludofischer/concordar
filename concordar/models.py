@@ -19,7 +19,7 @@ class BasicConcordanceServer(object):
     def __init__(self, cache):
         self.cache = cache
 
-    def concordance(self, word, radius, tokenized):
+    def concordance(self, word, radius):
         """Returns a concordance for a single word to the server."""
         return tuple(concordance.search_sequence(self.cache.tokens, word, radius))
 

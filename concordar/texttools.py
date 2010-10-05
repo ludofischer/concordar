@@ -85,11 +85,12 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setPlainText(self.cache.text)
         self.textBrowser.blockSignals(False)
 
-    def move_cursor_to_word(self, index):
+    def move_cursor_to_word(self, chosen):
         """Show an occurence in its complete context."""
-        model = index.model()
-        word_position = model.data(model.index(index.row(), 0))
-       
+        model = chosen.model()
+        index = model.data(model.index(chosen.row(), 0))
+        word_position = self.cache.coords[index]
+
         cursor = self.textBrowser.textCursor()
       
         cursor.setPosition(word_position)
@@ -125,5 +126,5 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.setExtraSelections((extra_selection,))
 
     def update_concordance(self):
-        self.concordanceModel.set_matches(self.server.concordance(self.word, self.radiusBox.value(), self.tokenized ))
+        self.concordanceModel.set_matches(self.server.concordance(self.word, self.radiusBox.value()))
 
