@@ -11,12 +11,13 @@ class AlternateTest(unittest.TestCase):
         self.assertEqual(self.sequence, ((0,2,'La'), (1, 8,'capra'), (2, 14,'canta')))
 
     def test_lowercase(self):
-        extractor = concordance.lowercase_extractor('terror')
-        self.assertTrue(1,extractor('Terror'))
-        self.assertTrue(1,extractor('terror'))
+        import functools
+        extractor = functools.partial(concordance.lowercase_same, 'terror')
+        self.assertTrue(extractor('Terror'))
+        self.assertTrue(extractor('terror'))
         self.assertFalse(extractor('sunday'))
         
-        extractor = concordance.lowercase_extractor('Terrier')
+        extractor = functools.partial(concordance.lowercase_same, 'Terrier')
         self.assertTrue(extractor('terrier'))
 
     def test_positions(self):

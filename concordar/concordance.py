@@ -3,13 +3,10 @@
 from PyQt4 import QtGui
 
 
-def lowercase_extractor(word):
-    """Returns a function returning the index of any matching token."""
-    def configured_extractor(match):
-        return match.lower() == word.lower()
+def lowercase_same(word1, word2):
+    """Returns whether the lowercase forms of the two words match."""
+    return word1.lower() == word2.lower()
             
-    return configured_extractor
-
 def search_sequence(sequence, word, width):
     """Yields matching strings and their visual positioning."""
     for result in build_results(sequence, symmetric_ranges(matching_indices(sequence, word), width, len(sequence))):
@@ -35,10 +32,11 @@ def symmetric_ranges(iterable, width, maximum):
             end = index + width + 1
         yield (index, start, end)
 
-def matching_indices(sequence, word, criterion_definition=lowercase_extractor):
+def matching_indices(sequence, word, criterion_definition=lowercase_same):
     """Returns the indices of the matching tokens."""
     import operator
-    criterion = criterion_definition(word)
+    import functools
+    criterion = functools.partial(criterion_definition, word)
     return map(lambda x: operator.getitem(x, 0), filter(lambda x: criterion(x[1]), [(index, thing) for (index, coord, thing) in sequence]))
        
 
