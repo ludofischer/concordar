@@ -17,12 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Concordance.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 from PyQt4 import QtCore, QtGui
 
-import ui_main_window
-import models
+from . import ui_main_window
+from . import models
 
 class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     """The main appication."""
@@ -78,7 +76,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
     def change_working_file(self, filename):
         """Replaces the current text with the contents of the user-supplied file."""
         with open(filename, 'r') as f:
-            text = f.read().decode('utf-8')
+            text = f.read()
         self.text = text
         self.tokenized = self.server.tokenize(text)
         self.prepare_browser()

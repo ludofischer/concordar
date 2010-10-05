@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
-import unittest2 as unittest
+import unittest
 from PyQt4 import QtGui
 from concordar import concordance
 
