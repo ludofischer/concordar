@@ -75,7 +75,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def change_working_file(self, filename):
         """Replaces the current text with the contents of the user-supplied file."""
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf-8') as f:
             text = f.read()
         self.text = text
         self.tokenized = self.server.tokenize(text)
