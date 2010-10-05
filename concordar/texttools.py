@@ -86,7 +86,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.textBrowser.blockSignals(False)
 
     def move_cursor_to_word(self, chosen):
-        """Show an occurence in its complete context."""
+        """Show an occurrence in its complete context."""
         model = chosen.model()
         index = model.data(model.index(chosen.row(), 0))
         word_position = self.cache.coords[index]
