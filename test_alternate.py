@@ -12,15 +12,15 @@ class AlternateTest(unittest.TestCase):
 
     def test_lowercase(self):
         extractor = concordance.lowercase_extractor('terror')
-        self.assertEqual(1,extractor(1,'Terror'))
-        self.assertEqual(1,extractor(1, 'terror'))
-        self.assertFalse(extractor(1, 'sunday'))
+        self.assertTrue(1,extractor('Terror'))
+        self.assertTrue(1,extractor('terror'))
+        self.assertFalse(extractor('sunday'))
         
         extractor = concordance.lowercase_extractor('Terrier')
-        self.assertEqual(1, extractor(1, 'terrier'))
+        self.assertTrue(extractor('terrier'))
 
     def test_positions(self):
-        result = concordance.positions(self.sequence, 'capra')
+        result = concordance.matching_indices(self.sequence, 'capra')
         self.assertEqual(next(result), 1)
         
     def test_build_results(self):
