@@ -8,7 +8,7 @@ class AlternateTest(unittest.TestCase):
         self.sequence = importers.graphical_tokenize(self.text)
 
     def test_import(self):
-        self.assertEqual(self.sequence, ((0,2,'La'), (1, 8,'capra'), (2, 14,'canta')))
+        self.assertEqual(self.sequence, ((2,'La'), (8,'capra'), (14,'canta')))
 
     def test_lowercase(self):
         import functools

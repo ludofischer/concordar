@@ -8,15 +8,15 @@ def lowercase_same(word1, word2):
     return word1.lower() == word2.lower()
             
 def search_sequence(sequence, word, width):
-    """Yields matching strings and their visual positioning."""
+    """Yields matching strings and their indices."""
     for result in build_results(sequence, symmetric_ranges(matching_indices(sequence, word), width, len(sequence))):
         yield result
       
-def build_results(sequence, ranges):
-    """Yields visual position and corresponding string for ranges in sequence."""
+def build_results(tokens, ranges):
+    """Yields index and text for relevant ranges."""
     for index, start, end in ranges:
-        words = [item[2] for item in sequence[start:end]]
-        yield (sequence[index][1], ' '.join(words))
+        matches = tokens[start:end]
+        yield (index,  ' '.join(matches))
 
 def symmetric_ranges(iterable, width, maximum):
     """Returns ranges of the specified width for iterable."""
@@ -37,6 +37,5 @@ def matching_indices(sequence, word, criterion_definition=lowercase_same):
     import operator
     import functools
     criterion = functools.partial(criterion_definition, word)
-    return map(lambda x: operator.getitem(x, 0), filter(lambda x: criterion(x[1]), [(index, thing) for (index, coord, thing) in sequence]))
+    return map(lambda x: operator.getitem(x, 0), filter(lambda x:criterion(x[1]), zip(range(len(sequence)),sequence)))
        
-
