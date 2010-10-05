@@ -25,3 +25,10 @@ class ModelsTest(unittest.TestCase):
         result = server.concordance( 'in', 1, result)        
 
         
+    def test_cache(self):
+        cache = models.Cache('la luna')
+        self.assertEqual(cache.tokens, ['la', 'luna'])
+        self.assertEqual(cache.coords, [2, 7])
+
+if __name__ == '__main__':
+    unittest.main()

@@ -29,7 +29,7 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         super(TextTools, self).__init__(parent)
         self.construct_layout()
         self.connect_slots()
-        self.setup_interactive_concordance()
+        self.setup_basic_concordance()
 
     def construct_layout(self):
         """Builds the UI."""
@@ -59,14 +59,16 @@ class TextTools(QtGui.QMainWindow, ui_main_window.Ui_MainWindow):
         self.wordField.textEdited.connect(self.new_word_typed)
         self.matchesView.clicked.connect(self.move_cursor_to_word)
 
-    def setup_interactive_concordance(self):
+    def setup_basic_concordance(self):
         """Creates the plumbing necessary to use basic concordances."""
         self.concordanceModel = models.ConcordanceModel()
         self.matchesView.setModel(self.concordanceModel)
         self.matchesView.setModelColumn(1)
         self.server = models.BasicConcordanceServer()
-        self.text = self.textBrowser.toPlainText()
-        self.tokenized = self.server.tokenize(self.text)
+        self.cache  = {'text': self.textBrowser.toPlainText(),}
+        tokenized = self.server.tokenize(self.cache['text'])
+        self.cache['tokens'] = [item.token for item in tokenized]
+        self.cache['coords'] = [item.coord for item in tokenized]
 
     def choose_file(self):
         """Makes the user choose a file to study from disk."""

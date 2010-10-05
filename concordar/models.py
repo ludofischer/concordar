@@ -2,16 +2,26 @@
 from PyQt4 import QtCore
 from . import concordance, importers
 
+class Cache(object):
+    def __init__(self, text):
+        self.set_text(text)
+
+    def set_text(self, text):
+        """Builds non-punctuation, whitespace-separated tokens."""
+        tokenized = importers.graphical_tokenize(text)
+        self.tokens = [item.token for item in tokenized]
+        self.coords = [item.coord for item in tokenized]
+
+    
 class BasicConcordanceServer(object):
     """A façade for algorithms implementing a basic concordance."""
-    
+    def __init__(self, cache):
+        self.cache = cache
+
     def concordance(self, word, radius, tokenized):
         """Returns a concordance for a single word to the server."""
-        return tuple(concordance.search_sequence(tokenized, word, radius))
+        return tuple(concordance.search_sequence(self.cache.tokens, word, radius))
 
-    def tokenize(self, text):
-        """Returns non-punctuation, whitespace-separated tokens."""
-        return importers.graphical_tokenize(text)
         
 class ConcordanceModel(QtCore.QAbstractTableModel):
     """A generated concordance."""
