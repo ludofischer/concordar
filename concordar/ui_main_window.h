@@ -2,7 +2,7 @@
 ** Form generated from reading UI file 'main_window.ui'
 **
 ** Created: 
-**      by: Qt User Interface Compiler version 4.6.3
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -16,14 +16,17 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLineEdit>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPlainTextEdit>
+#include <QtGui/QSpinBox>
 #include <QtGui/QSplitter>
 #include <QtGui/QStatusBar>
-#include <QtGui/QToolBar>
+#include <QtGui/QToolBox>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -39,10 +42,14 @@ public:
     QSplitter *splitter;
     QPlainTextEdit *textBrowser;
     QListView *matchesView;
+    QToolBox *toolBox;
+    QWidget *page;
+    QVBoxLayout *verticalLayout;
+    QLineEdit *searchBox;
+    QSpinBox *radiusBox;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
-    QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -82,29 +89,47 @@ public:
         matchesView->setSizePolicy(sizePolicy);
         matchesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         splitter->addWidget(matchesView);
+        toolBox = new QToolBox(splitter);
+        toolBox->setObjectName(QString::fromUtf8("toolBox"));
+        page = new QWidget();
+        page->setObjectName(QString::fromUtf8("page"));
+        page->setGeometry(QRect(0, 0, 203, 430));
+        verticalLayout = new QVBoxLayout(page);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        searchBox = new QLineEdit(page);
+        searchBox->setObjectName(QString::fromUtf8("searchBox"));
+
+        verticalLayout->addWidget(searchBox);
+
+        radiusBox = new QSpinBox(page);
+        radiusBox->setObjectName(QString::fromUtf8("radiusBox"));
+
+        verticalLayout->addWidget(radiusBox);
+
+        toolBox->addItem(page, QString::fromUtf8("Simple concordance"));
+        splitter->addWidget(toolBox);
 
         horizontalLayout->addWidget(splitter);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 740, 25));
+        menubar->setGeometry(QRect(0, 0, 740, 28));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
-        toolBar = new QToolBar(MainWindow);
-        toolBar->setObjectName(QString::fromUtf8("toolBar"));
-        toolBar->setFloatable(false);
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menubar->addAction(menuFile->menuAction());
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionQuit);
 
         retranslateUi(MainWindow);
+
+        toolBox->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -114,8 +139,8 @@ public:
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0, QApplication::UnicodeUTF8));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", 0, QApplication::UnicodeUTF8));
         actionFind->setText(QApplication::translate("MainWindow", "Find", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Simple concordance", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
-        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0, QApplication::UnicodeUTF8));
         Q_UNUSED(MainWindow);
     } // retranslateUi
 
