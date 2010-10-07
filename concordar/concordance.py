@@ -37,5 +37,5 @@ def matching_indices(sequence, word, criterion_definition=lowercase_same):
     import operator
     import functools
     criterion = functools.partial(criterion_definition, word)
-    return map(lambda x: operator.getitem(x, 0), filter(lambda x:criterion(x[1]), zip(range(len(sequence)),sequence)))
+    return map(lambda x: operator.getitem(x, 0), filter(lambda x:criterion(x[1]), enumerate(sequence)))
        
