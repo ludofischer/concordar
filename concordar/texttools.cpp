@@ -34,6 +34,7 @@ void TextTools::construct_layout() {
 void TextTools::connect_slots() {
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(choose_file()));
     connect(ui->actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->textBrowser, SIGNAL(cursorPositionChanged()), this, SLOT(build_for_word_selected_in_text()));
 }
 
 void TextTools::setup_basic_concordance() {
@@ -67,6 +68,8 @@ void TextTools::import_file(const QString& filename) {
  
 
 void TextTools::build_for_word_selected_in_text() {
+    QTextCursor cursor = ui->textBrowser->textCursor();
+    highlight_selected_word(cursor);
 }
 
 void TextTools::build_for_typed_word(const QString& word)  {
