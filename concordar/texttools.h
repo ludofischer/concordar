@@ -31,8 +31,8 @@ private:
   Cache *cache;
   void construct_layout();
   void connect_slots();
+  void import_file(const QString&);
   void setup_basic_concordance();
-  void prepare_browser();
   void highlight_selected_word(QTextCursor&);
                            
 };

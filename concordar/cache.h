@@ -14,8 +14,11 @@ class Cache {
         positions = the_positions; }
     void set_word(QString& word) { _word = word; }
     QString word() const { return _word; }
+    void set_text(const QString&);
+    QString get_text() const;
 private:
   QString _word;
+  QString _text;
   std::vector<QString> tokens;
   std::vector<int> positions;
 };

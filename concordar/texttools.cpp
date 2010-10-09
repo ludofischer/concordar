@@ -34,9 +34,9 @@ void TextTools::connect_slots() {
 }
 
 void TextTools::setup_basic_concordance() {
-}
-
-void TextTools::prepare_browser() {
+    ui->textBrowser->blockSignals(true);
+    ui->textBrowser->setPlainText(cache->get_text());
+    ui->textBrowser->blockSignals(false);
 }
 
 void TextTools::highlight_selected_word(QTextCursor& cursor) {
@@ -44,11 +44,18 @@ void TextTools::highlight_selected_word(QTextCursor& cursor) {
 
 void TextTools::choose_file() {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose file to study"), QDir::homePath(), tr("Text files (*.txt)"));
-    QString text = utilities::read_text(filename);
-    ui->textBrowser->blockSignals(true);
-    ui->textBrowser->setPlainText(text);
-    ui->textBrowser->blockSignals(false);
+    if (!filename.isEmpty()) {
+        import_file(filename);
+        setup_basic_concordance();
+    } 
 }
+
+void TextTools::import_file(const QString& filename) {
+    QString text = utilities::read_text(filename);
+    cache->set_text(text);
+}
+ 
+
 void TextTools::build_for_word_selected_in_text() {
 }
 
