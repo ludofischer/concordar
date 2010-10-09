@@ -6,6 +6,9 @@
 #include <QString>
 #include <QModelIndex>
 #include <QTextCursor>
+#include <QTextEdit>
+#include <QBrush>
+#include <QColor>
 #include <QKeySequence>
 #include "ui_main_window.h"
 #include "texttools.h"
@@ -40,6 +43,13 @@ void TextTools::setup_basic_concordance() {
 }
 
 void TextTools::highlight_selected_word(QTextCursor& cursor) {
+    QTextEdit::ExtraSelection selection;
+    selection.format.setBackground(QBrush(QColor("yellow")));
+    selection.cursor = cursor;
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    extraSelections.append(selection);
+    ui->textBrowser->setExtraSelections(extraSelections);
+    
 }
 
 void TextTools::choose_file() {
