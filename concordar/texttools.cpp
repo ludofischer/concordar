@@ -22,6 +22,7 @@ TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWind
 
 TextTools::~TextTools() {
   delete ui;
+  delete cache;
 }
 
 void TextTools::construct_layout() {
