@@ -10,6 +10,7 @@
 #include "ui_main_window.h"
 #include "texttools.h"
 #include "cache.h"
+#include "read_text.h"
 
 TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache)  {
   
@@ -42,7 +43,10 @@ void TextTools::highlight_selected_word(QTextCursor& cursor) {
 
 void TextTools::choose_file() {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose file to study"), QDir::homePath(), tr("Text files (*.txt)"));
-    
+    QString text = utilities::read_text(filename);
+    ui->textBrowser->blockSignals(true);
+    ui->textBrowser->setPlainText(text);
+    ui->textBrowser->blockSignals(false);
 }
 void TextTools::build_for_word_selected_in_text() {
 }
