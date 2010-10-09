@@ -6,6 +6,7 @@
 #include <QTextCursor>
 #include <QModelIndex>
 #include "ui_main_window.h"
+#include "cache.h"
 
 class TextTools : public QMainWindow {
   
@@ -27,6 +28,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
+  Cache *cache;
   void construct_layout();
   void connect_slots();
   void setup_basic_concordance();

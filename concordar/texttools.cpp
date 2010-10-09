@@ -9,8 +9,9 @@
 #include <QKeySequence>
 #include "ui_main_window.h"
 #include "texttools.h"
+#include "cache.h"
 
-TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)  {
+TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache)  {
   
   ui->setupUi(this);
   ui->actionQuit->setShortcut(QKeySequence::Quit);

@@ -6,9 +6,16 @@
 
 class Cache {
  public:
+    Cache() {}
     void change_working_file(const QString&);
+    std::vector<QString> get_tokens();
+    void set_tokens(const std::vector<QString>& the_tokens) { tokens = the_tokens; }
+    void set_positions(const std::vector<int>& the_positions) {
+        positions = the_positions; }
+    void set_word(QString& word) { _word = word; }
+    QString word() const { return _word; }
 private:
-  QString word;
+  QString _word;
   std::vector<QString> tokens;
   std::vector<int> positions;
 };
