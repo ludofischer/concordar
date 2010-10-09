@@ -69,6 +69,7 @@ void TextTools::import_file(const QString& filename) {
 
 void TextTools::build_for_word_selected_in_text() {
     QTextCursor cursor = ui->textBrowser->textCursor();
+    cursor.select(QTextCursor::WordUnderCursor);
     highlight_selected_word(cursor);
 }
 
