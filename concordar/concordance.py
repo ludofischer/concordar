@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from PyQt4 import QtGui
-
 
 def lowercase_same(word1, word2):
     """Returns whether the lowercase forms of the two words match."""
