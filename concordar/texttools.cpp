@@ -44,6 +44,8 @@ void TextTools::setup_basic_concordance() {
     ui->textBrowser->blockSignals(true);
     ui->textBrowser->setPlainText(cache->text);
     ui->textBrowser->blockSignals(false);
+    server->set_cache(cache);
+    server->tokenize();
 }
 
 void TextTools::highlight_selected_word(QTextCursor& cursor) {
@@ -88,4 +90,5 @@ void TextTools::show_occurrence_context(QModelIndex&){
 }
 
 void TextTools::update_concordance() {
+
 }
