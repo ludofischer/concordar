@@ -39,7 +39,7 @@ void TextTools::connect_slots() {
 
 void TextTools::setup_basic_concordance() {
     ui->textBrowser->blockSignals(true);
-    ui->textBrowser->setPlainText(cache->get_text());
+    ui->textBrowser->setPlainText(cache->text);
     ui->textBrowser->blockSignals(false);
 }
 
@@ -63,7 +63,7 @@ void TextTools::choose_file() {
 
 void TextTools::import_file(const QString& filename) {
     QString text = utilities::read_text(filename);
-    cache->set_text(text);
+    cache->text = text;
 }
  
 
@@ -72,13 +72,13 @@ void TextTools::build_for_word_selected_in_text() {
     cursor.select(QTextCursor::WordUnderCursor);
     highlight_selected_word(cursor);
     QString word = cursor.selectedText();
-    cache->set_text(word);
+    cache->word = word;
     ui->searchBox->setText(word);
     update_concordance();
 }
 
 void TextTools::build_for_typed_word(const QString& word)  {
-    cache->set_text(word);
+    cache->word = word;
     update_concordance();
 }
 
