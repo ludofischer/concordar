@@ -13,9 +13,10 @@
 #include "ui_main_window.h"
 #include "texttools.h"
 #include "cache.h"
+#include "server.h"
 #include "read_text.h"
 
-TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache)  {
+TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache), server(new BasicConcordanceServer)  {
     construct_layout();
     connect_slots();
 }

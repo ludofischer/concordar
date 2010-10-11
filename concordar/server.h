@@ -8,11 +8,11 @@
 class BasicConcordanceServer {
  public:
     BasicConcordanceServer();
-    void concordance(const QString&, int, const std::vector<QString>&);
+    void concordance(const QString&, const std::vector<QString>&, int, std::vector<QString>&);
     void tokenize(const QString&, std::vector<QString>&, std::vector<int>&);
-    
+    void set_cache(Cache*);
 private:
-
+    Cache *_cache;
 };  
 
 #endif
