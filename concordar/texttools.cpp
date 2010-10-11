@@ -16,11 +16,8 @@
 #include "read_text.h"
 
 TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache)  {
-  
-  ui->setupUi(this);
-  ui->actionQuit->setShortcut(QKeySequence::Quit);
-  ui->actionOpen->setShortcut(QKeySequence::Open);
-  connect_slots();
+    construct_layout();
+    connect_slots();
 }
 
 TextTools::~TextTools() {
@@ -29,6 +26,9 @@ TextTools::~TextTools() {
 }
 
 void TextTools::construct_layout() {
+    ui->setupUi(this);
+    ui->actionQuit->setShortcut(QKeySequence::Quit);
+    ui->actionOpen->setShortcut(QKeySequence::Open);
 }
 
 void TextTools::connect_slots() {
@@ -71,9 +71,15 @@ void TextTools::build_for_word_selected_in_text() {
     QTextCursor cursor = ui->textBrowser->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     highlight_selected_word(cursor);
+    QString word = cursor.selectedText();
+    cache->set_text(word);
+    ui->searchBox->setText(word);
+    update_concordance();
 }
 
 void TextTools::build_for_typed_word(const QString& word)  {
+    cache->set_text(word);
+    update_concordance();
 }
 
 void TextTools::show_occurrence_context(QModelIndex&){
