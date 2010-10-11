@@ -29,12 +29,14 @@ void TextTools::construct_layout() {
     ui->setupUi(this);
     ui->actionQuit->setShortcut(QKeySequence::Quit);
     ui->actionOpen->setShortcut(QKeySequence::Open);
+    ui->radiusBox->setMinimum(1);
 }
 
 void TextTools::connect_slots() {
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(choose_file()));
     connect(ui->actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(ui->textBrowser, SIGNAL(cursorPositionChanged()), this, SLOT(build_for_word_selected_in_text()));
+    connect(ui->radiusBox, SIGNAL(valueChanged(int)), this, SLOT(update_concordance()));
 }
 
 void TextTools::setup_basic_concordance() {
@@ -50,7 +52,6 @@ void TextTools::highlight_selected_word(QTextCursor& cursor) {
     QList<QTextEdit::ExtraSelection> extraSelections;
     extraSelections.append(selection);
     ui->textBrowser->setExtraSelections(extraSelections);
-    
 }
 
 void TextTools::choose_file() {
