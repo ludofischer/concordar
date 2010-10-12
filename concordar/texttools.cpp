@@ -9,6 +9,7 @@
 #include <QTextEdit>
 #include <QBrush>
 #include <QColor>
+#include <QMessageBox>
 #include <QKeySequence>
 #include "ui_main_window.h"
 #include "texttools.h"
@@ -36,6 +37,8 @@ void TextTools::construct_layout() {
 void TextTools::connect_slots() {
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(choose_file()));
     connect(ui->actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about_info()));
+
     connect(ui->textBrowser, SIGNAL(cursorPositionChanged()), this, SLOT(build_for_word_selected_in_text()));
     connect(ui->radiusBox, SIGNAL(valueChanged(int)), this, SLOT(update_concordance()));
 }
@@ -91,4 +94,13 @@ void TextTools::show_occurrence_context(QModelIndex&){
 
 void TextTools::update_concordance() {
 
+}
+
+void TextTools::about_info() {
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Concordar");
+    msgBox.setText("Concordar");
+    msgBox.setInformativeText(tr("Copyright 2010 Ludovico Fischer"));
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
 }

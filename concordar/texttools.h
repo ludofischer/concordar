@@ -26,6 +26,7 @@ private slots:
   void build_for_word_selected_in_text();
   void build_for_typed_word(const QString&);
   void show_occurrence_context(QModelIndex&);
+  void about_info();
 
 private:
   Ui::MainWindow *ui;
