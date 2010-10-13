@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <Qt>
+#include <QWidget>
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QDir>
@@ -31,6 +32,9 @@ void TextTools::construct_layout() {
     ui->setupUi(this);
     ui->actionQuit->setShortcut(QKeySequence::Quit);
     ui->actionOpen->setShortcut(QKeySequence::Open);
+    
+    QWidget *viewport = ui->textBrowser->viewport();
+    viewport->setCursor(Qt::PointingHandCursor);
     ui->radiusBox->setMinimum(1);
 }
 

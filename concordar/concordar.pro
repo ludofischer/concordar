@@ -7,7 +7,9 @@ TARGET =
 DEPENDPATH += . test
 INCLUDEPATH += .
 
+QMAKE_CXXFLAGS += -sted=c++0x
+
 # Input
-HEADERS += texttools.h cache.h server.h read_text.h importers.h
+HEADERS += texttools.h cache.h server.h read_text.h importers.h token.h concordance.h
 FORMS += main_window.ui
-SOURCES += texttools.cpp server.cpp main.cpp read_text.cpp importers.cpp
+SOURCES += texttools.cpp server.cpp main.cpp read_text.cpp importers.cpp concordance.cpp

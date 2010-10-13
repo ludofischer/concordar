@@ -5,9 +5,10 @@
 #include <QString>
 #include <QTextDocument>
 #include <QTextCursor>
+#include "token.h"
 
 namespace importers {
-void graphical_tokenize(const QString&, std::vector<QString>&, std::vector<int>&);
+    void graphical_tokenize(const QString&, std::vector<Token>&);
 }
 
 #endif

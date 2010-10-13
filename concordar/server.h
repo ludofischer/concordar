@@ -4,12 +4,13 @@
 #include <vector>
 #include <QString>
 #include "cache.h"
+#include "token.h"
 
 class BasicConcordanceServer {
  public:
     BasicConcordanceServer();
-    void concordance(const QString&, const std::vector<QString>&, int, std::vector<QString>&);
-    void tokenize(const QString&, std::vector<QString>&, std::vector<int>&);
+    void concordance(const QString&, const std::vector<Token>&, int, std::vector<QString>&);
+    void tokenize(const QString&, std::vector<Token>&);
     void tokenize();
     void set_cache(Cache*);
 private:

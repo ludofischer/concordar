@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <QString>
+#include "token.h"
 
 struct Cache {
     QString text;
     QString word;
-    std::vector<QString> tokens;
-    std::vector<int> positions;
+    std::vector<Token> tokens;
 
 };
 
