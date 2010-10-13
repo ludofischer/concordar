@@ -7,8 +7,8 @@
 namespace concordance {
 
 bool word_matches(const Token& token, const QString& word) {
-    return token.word == word;
-}
+    return token.word.toLower() == word.toLower();}
+
     
     std::list<size_t> ranges(size_t number, size_t radius, size_t max) {
         size_t start;

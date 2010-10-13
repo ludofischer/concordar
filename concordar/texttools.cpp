@@ -103,7 +103,7 @@ void TextTools::build_for_typed_word(const QString& word)  {
 
 void TextTools::show_occurrence_context(const QModelIndex& chosen){
     const QAbstractItemModel *model = chosen.model();
-    int position = model->data(model->index(chosen.row(), 0;
+//    int position = model->data(model->index(chosen.row(), 0;
 }
 
 void TextTools::update_concordance() {
