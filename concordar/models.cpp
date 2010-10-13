@@ -32,5 +32,7 @@ QVariant ConcordanceModel::data(const QModelIndex& index, int role = Qt::Display
 }
 
 void ConcordanceModel::set_results(const std::vector<concordance::Result>& things) {
+    beginResetModel();
     results = things;
+    endResetModel();
 }
