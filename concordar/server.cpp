@@ -1,6 +1,7 @@
 #include <vector>
 #include <functional>
 
+#include <QDebug>
 #include <QString>
 #include <QFuture>
 #include <QList>
@@ -31,8 +32,11 @@ void BasicConcordanceServer::concord(int radius, std::vector<concordance::Result
 }
 
 void BasicConcordanceServer::concord(const QString& word, const std::vector<concordance::Token>& tokens, int radius, std::vector<concordance::Result>& result) {
+
     QFuture<concordance::Token> matching = QtConcurrent::filtered(tokens, std::bind<bool>(concordance::word_matches, std::placeholders::_1, word));
+
     QList<concordance::Token> matches = matching.results();
+    qDebug() << matches.count();
 
     concordance::results(tokens, matches.toStdList(), radius, result);
 }

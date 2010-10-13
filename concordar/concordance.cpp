@@ -1,5 +1,7 @@
 #include <list>
 #include <vector>
+
+#include <QDebug>
 #include "concordance.h"
 
 namespace concordance {
@@ -34,13 +36,16 @@ bool word_matches(const Token& token, const QString& word) {
     }
 
     void results(const std::vector<Token>& all, const std::list<Token>& matching, size_t radius, std::vector<Result>& results) {
+        qDebug() << "entered concordance.";
+        qDebug() << matching.size();
         for (std::list<Token>::const_iterator it = matching.begin(); it != matching.end(); ++it) {
             Result result;
             std::list<size_t> contexts = ranges(it->index, radius, all.size());
-            
+
             for (std::list<size_t>::const_iterator it = contexts.begin(); it != contexts.end(); ++it) {
                 size_t index = *it;
                 QString word = all[index].word;
+                qDebug() << word;
                 result.sentence << word;
             }
 

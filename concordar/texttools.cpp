@@ -74,13 +74,14 @@ void TextTools::choose_file() {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose file to study"), QDir::homePath(), tr("Text files (*.txt)"));
     if (!filename.isEmpty()) {
         import_file(filename);
-        setup_basic_concordance();
     } 
 }
 
 void TextTools::import_file(const QString& filename) {
     QString text = utilities::read_text(filename);
     cache->text = text;
+    cache->tokens.clear();
+    setup_basic_concordance();
 }
  
 
@@ -105,7 +106,7 @@ void TextTools::show_occurrence_context(QModelIndex&){
 void TextTools::update_concordance() {
     int radius = ui->radiusBox->value();
     std::vector<concordance::Result> results;
-    server->concord(radius, results);
+    server->concord(cache->word, cache->tokens, radius, results);
     model->set_results(results);
 }
 
