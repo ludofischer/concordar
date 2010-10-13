@@ -25,7 +25,7 @@ QVariant ConcordanceModel::data(const QModelIndex& index, int role = Qt::Display
     }
     
     if (role == Qt::DisplayRole) {
-        return results[index.row()].sentence;
+        return results[index.row()].sentence.join(" ");
     } else {
         return QVariant();
     }
