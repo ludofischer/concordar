@@ -8,6 +8,7 @@
 #include "ui_main_window.h"
 #include "cache.h"
 #include "server.h"
+#include "models.h"
 
 class TextTools : public QMainWindow {
   
@@ -32,6 +33,7 @@ private:
   Ui::MainWindow *ui;
   Cache *cache;
   BasicConcordanceServer *server;
+  ConcordanceModel *model;
   void construct_layout();
   void connect_slots();
   void import_file(const QString&);

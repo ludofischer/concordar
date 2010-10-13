@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <QString>
-#include "token.h"
+#include "concordance.h"
 
 struct Cache {
     QString text;
     QString word;
-    std::vector<Token> tokens;
+    std::vector<concordance::Token> tokens;
 
 };
 

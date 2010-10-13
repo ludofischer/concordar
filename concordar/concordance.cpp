@@ -1,7 +1,6 @@
 #include <list>
 #include <vector>
 #include "concordance.h"
-#include "token.h"
 
 namespace concordance {
 
@@ -34,10 +33,10 @@ bool word_matches(const Token& token, const QString& word) {
         return result;
     }
 
-    void results(const std::vector<Token>& all, const std::list<Token>& matching, size_t radius, size_t max, std::vector<Result>& results) {
+    void results(const std::vector<Token>& all, const std::list<Token>& matching, size_t radius, std::vector<Result>& results) {
         for (std::list<Token>::const_iterator it = matching.begin(); it != matching.end(); ++it) {
             Result result;
-            std::list<size_t> contexts = ranges(it->index, radius, max);
+            std::list<size_t> contexts = ranges(it->index, radius, all.size());
             
             for (std::list<size_t>::const_iterator it = contexts.begin(); it != contexts.end(); ++it) {
                 size_t index = *it;

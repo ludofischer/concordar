@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <QDebug>
 #include <Qt>
 #include <QWidget>
@@ -17,8 +19,10 @@
 #include "cache.h"
 #include "server.h"
 #include "read_text.h"
+#include "models.h"
+#include "concordance.h"
 
-TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache), server(new BasicConcordanceServer)  {
+TextTools::TextTools(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), cache(new Cache), server(new BasicConcordanceServer), model(new ConcordanceModel)  {
     construct_layout();
     connect_slots();
 }
@@ -51,6 +55,8 @@ void TextTools::setup_basic_concordance() {
     ui->textBrowser->blockSignals(true);
     ui->textBrowser->setPlainText(cache->text);
     ui->textBrowser->blockSignals(false);
+    ui->matchesView->setModel(model);
+    ui->matchesView->setModelColumn(1);
     server->set_cache(cache);
     server->tokenize();
 }
@@ -97,7 +103,10 @@ void TextTools::show_occurrence_context(QModelIndex&){
 }
 
 void TextTools::update_concordance() {
-
+    int radius = ui->radiusBox->value();
+    std::vector<concordance::Result> results;
+    server->concord(radius, results);
+    model->set_results(results);
 }
 
 void TextTools::about_info() {

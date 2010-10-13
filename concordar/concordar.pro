@@ -10,6 +10,6 @@ INCLUDEPATH += .
 QMAKE_CXXFLAGS += -std=c++0x
 
 # Input
-HEADERS += texttools.h cache.h server.h read_text.h importers.h token.h concordance.h models.h
+HEADERS += texttools.h cache.h server.h read_text.h importers.h concordance.h models.h
 FORMS += main_window.ui
 SOURCES += texttools.cpp server.cpp main.cpp read_text.cpp importers.cpp concordance.cpp models.cpp
