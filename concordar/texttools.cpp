@@ -89,9 +89,8 @@ void TextTools::build_for_word_selected_in_text() {
     QTextCursor cursor = ui->textBrowser->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     highlight_selected_word(cursor);
-    QString word = cursor.selectedText();
-    cache->word = word;
-    ui->searchBox->setText(word);
+    cache->word = cursor.selectedText();
+    ui->searchBox->setText(cache->word);
     update_concordance();
 }
 
