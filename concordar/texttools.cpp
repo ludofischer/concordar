@@ -4,6 +4,7 @@
 #include <Qt>
 #include <QWidget>
 #include <QMainWindow>
+#include <QAbstractItemModel>
 #include <QFileDialog>
 #include <QDir>
 #include <QString>
@@ -49,6 +50,7 @@ void TextTools::connect_slots() {
 
     connect(ui->textBrowser, SIGNAL(cursorPositionChanged()), this, SLOT(build_for_word_selected_in_text()));
     connect(ui->radiusBox, SIGNAL(valueChanged(int)), this, SLOT(update_concordance()));
+    connect(ui->matchesView, SIGNAL(clicked(const QModelIndex)), this, SLOT(show_occurrence_context(const QModelIndex&)));
 }
 
 void TextTools::setup_basic_concordance() {
@@ -99,7 +101,9 @@ void TextTools::build_for_typed_word(const QString& word)  {
     update_concordance();
 }
 
-void TextTools::show_occurrence_context(QModelIndex&){
+void TextTools::show_occurrence_context(const QModelIndex& chosen){
+    const QAbstractItemModel *model = chosen.model();
+    int position = model->data(model->index(chosen.row(), 0;
 }
 
 void TextTools::update_concordance() {

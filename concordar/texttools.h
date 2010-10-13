@@ -26,7 +26,7 @@ private slots:
   void choose_file();
   void build_for_word_selected_in_text();
   void build_for_typed_word(const QString&);
-  void show_occurrence_context(QModelIndex&);
+  void show_occurrence_context(const QModelIndex&);
   void about_info();
 
 private:
